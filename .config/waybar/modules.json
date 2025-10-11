@@ -1,0 +1,136 @@
+{
+    // --- Battery ---
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-alt": "{icon} {time}",
+        "format-missing": "󱟩",
+        "format-icons": [" ", " ", " ", " ", " "],
+        "interval": 5
+    },
+
+   // --- Bluetooth ---
+    "bluetooth": {
+        "format": " {status}",
+        "format-disabled": " OFF",
+        "format-connected": " ({num_connections})",
+        "format-off": "",
+        "interval": 30,
+        "on-click": "blueberry",
+        "format-no-controller": ""
+    },
+    
+    // --- App Launcher (Fuzzel) ---
+    "custom/launcher": {
+        "format": "󰊠",
+        "tooltip": false,
+        "on-click": "fuzzel"
+    },
+
+    // --- Disk Usage ---
+    "disk": {
+        "interval": 30,
+        "format": " {percentage_used}%",
+        "path": "/",
+        "on-click": "kitty -e nohup baobab &"
+    },
+
+    // --- Memory (Updated) ---
+    "memory": {
+        "format": " {percentage}%",
+        // "on-click": "kitty -e btop"
+        "on-click": "~/.config/hypr/scripts/btop-floating.sh"
+    },
+    
+    // --- Temperature ---
+    "temperature": {
+        "thermal-zone": 0,
+        "format": " {temperatureC}°C",
+        "format-critical": " {temperatureC}°C",
+        "critical-threshold": 80,
+        "interval": 5
+    },
+    
+    // --- CPU Usage (Updated) ---
+    "cpu": {
+        "format": " {usage}%",
+        //"on-click": "kitty -e btop"
+    "on-click": "~/.config/hypr/scripts/btop-floating.sh"
+
+    },
+    
+    // --- Workspaces ---
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "on-click": "activate",
+        "format-icons": {
+            "1": "󰲠", "2": "󰲢", "3": "󰲤", "4": "󰲦", "5": "󰲨",
+            "6": "󰲪", "7": "󰲬", "8": "󰲮", "9": "󰲰", "10": "󰿬",
+            "default": ""
+        },
+        "persistent-workspaces": { "*": 4 }
+    },
+    
+    // --- Date Module (as a clock instance) ---
+    "clock#date": {
+        "format": " {:%a %d}",
+        "interval": 3600,
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "year",
+            "mode-mon-col": 3,
+            "weeks-pos": "right",
+            "on-scroll": 1,
+            "format": {
+                "months": "<span color='#fab387'><b>{}</b></span>",
+                "days": "<span color='#f5c2e7'><b>{}</b></span>",
+                "weeks": "<span color='#94e2d5'><b>W{}</b></span>",
+                "weekdays": "<span color='#f9e2af'><b>{}</b></span>",
+                "today": "<span color='#f38ba8'><b><u>{}</u></b></span>"
+            }
+        }
+    },
+    
+    // --- Time Module (as a clock instance) ---
+    "clock#time": {
+        "format": " {:%I:%M:%S %p}",
+        "interval": 1
+    },
+
+    // --- Power Menu ---
+    "custom/power": {
+        "format": "⏻",
+        "tooltip": false,
+        "on-click": "~/.config/hypr/scripts/powermenu.sh"
+    },
+    
+    // --- Network ---
+    "network": {
+        "format-wifi": "{icon}",
+        "format-ethernet": "󰈀",
+        "format-disconnected": "󰖪",
+        "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+        "tooltip-format": "{ifname}: {ipaddr}/{cidr}\n{essid} ({signalStrength}%)\n⬆ {bandwidthUpBytes} ⬇ {bandwidthDownBytes}",
+        "on-click": "nm-connection-editor"
+    },
+    
+    // --- Audio ---
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "󰖁",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "󱡏",
+            "headset": "󰋎",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol",
+        "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+        "scroll-step": 5
+    }
+}

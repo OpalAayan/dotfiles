@@ -1,0 +1,96 @@
+# ~/.config/dunst/dunstrc - v6 (Aura Dracula)
+
+[global]
+    ### GENERAL ###
+    idle_threshold = 0
+    monitor = 0
+    follow = mouse
+    
+    ### GEOMETRY (Even More Compact) ###
+    origin = top-right
+    offset = (30, 60)
+    width = 280
+    height = (0, 80)
+    shrink = yes
+    
+    ### STYLING (Constricting & Dark) ###
+    font = JetBrainsMono Nerd Font 10
+    line_height = 0
+    padding = 8
+    horizontal_padding = 8
+    frame_width = 2
+    frame_color = "#44475a" # Dracula Selection
+    separator_color = frame
+    corner_radius = 8
+    
+    ### FORMATTING ###
+    # Using Dracula's boldest colors (Pink, Gray, White) for high contrast text
+    format = "<span size='large' color='#ff79c9'><b>%s</b></span>\n<span color='#6272a4'><i>%a</i></span>\n%b"
+    alignment = left
+    vertical_alignment = center
+    word_wrap = yes
+    
+    ### ICONS ###
+    icon_position = left
+    min_icon_size = 48
+    max_icon_size = 64
+    icon_path = ~/.icons/Tela-dracula-dark/scalable/apps/:~/.icons/Tela-dracula-dark/48x48/apps/
+    
+    ### BEHAVIOR ###
+    show_age_threshold = 60
+    stack_duplicates = true
+    hide_duplicate_count = true
+    
+    ### MOUSE ###
+    mouse_left_click = close_current
+    mouse_middle_click = do_action
+    mouse_right_click = close_all
+
+# -----------------------------------------------------------------
+# URGENCY & COLOR SECTIONS (Aura Dracula)
+# -----------------------------------------------------------------
+[urgency_low]
+    background = "#21222Cea"  # Darker Dracula BG
+    foreground = "#f8f8f2"    # Dracula FG
+    frame_color = "#bd93f9"   # Dracula Purple
+    timeout = 10
+
+[urgency_normal]
+    background = "#21222Cea"  # Darker Dracula BG
+    foreground = "#f8f8f2"    # Dracula FG
+    frame_color = "#8be9fd"   # Dracula Cyan
+    timeout = 15
+
+[urgency_critical]
+    background = "#44475aea"  # Dracula Selection BG
+    foreground = "#f8f8f2"    # Dracula FG
+    frame_color = "#ff5555"   # Dracula "Blood" Red
+    timeout = 30
+
+# -----------------------------------------------------------------
+# ADVANCED RULES
+# -----------------------------------------------------------------
+[hide_notify_send]
+    appname = "notify-send"
+    # Title is Dracula Pink
+    format = "<span size='large' color='#ff79c9'><b>%s</b></span>\n%b"
+
+[progress_bar]
+    summary = "*Volume*" OR "*Brightness*"
+    format = "%i <b>%s</b> %p"
+    frame_color = "#f1fa8c"  # Dracula Yellow
+    background = "#44475aea"
+    timeout = 3
+
+[updates]
+    appname = "pamac-manager"
+    summary = "updates are available"
+    icon = "system-software-update"
+    frame_color = "#50fa7b"  # Dracula Green
+    timeout = 0
+
+[music]
+    appname = "cmus" OR "spotify"
+    # Title uses Dracula Purple text
+    format = "🎧 <span size='large' color='#bd93f9'><b>%s</b></span>\n<i>%b</i>"
+    timeout = 4

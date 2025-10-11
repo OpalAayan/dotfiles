@@ -1,0 +1,35 @@
+{
+    "include": ["~/.config/waybar/modules.json"],
+    // -------------------------------------------------------------------------
+    // Global Configuration
+    // -------------------------------------------------------------------------
+    "layer": "top",
+    "position": "top",
+    "height": 32,
+    "spacing": 4,
+    
+    // -------------------------------------------------------------------------
+    // Module Placement (with new modules)
+    // -------------------------------------------------------------------------
+    "modules-left": [
+        "custom/launcher",
+        "disk",
+        "memory",
+        "cpu",
+        "temperature",
+         
+    ],
+    "modules-center": [
+        "clock#date",
+        "clock#time"
+        
+    ],
+    "modules-right": [
+        "hyprland/workspaces",
+        "network",
+        "bluetooth",
+        "pulseaudio",
+        "battery",
+        "custom/power"
+    ]
+}

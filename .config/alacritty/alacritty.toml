@@ -1,0 +1,72 @@
+#665c54 alacrity.toml
+# Theme: Grovestorm (A high-contrast Everforest + Gruvbox fusion)
+
+# --- Key Bindings ---
+[keyboard]
+[[keyboard.bindings]]
+key = "Q"
+mods = "Control"
+action = "Quit"
+
+# Window & Padding
+[window]
+padding = { x = 12, y = 12 }
+opacity = 0.85
+
+# Scrolling
+[scrolling]
+history = 30000
+
+# Cursor - KEPT AS REQUESTED
+[cursor]
+style = { shape = "Underline", blinking = "Off" }
+unfocused_hollow = true
+
+# ===============================================================
+# Colors: Grovestorm
+# A custom-built, high-contrast fusion of Gruvbox and Everforest.
+# ===============================================================
+[colors]
+#primary = { background = "#232625", foreground = "#ebdbb2" }
+primary = { background = "#1d2021", foreground = "#ebdbb2" }
+selection = { text = "#1d2021", background = "#d9d4b8" }
+
+# Cursor colors - KEPT AS REQUESTED
+cursor = { text = "#1E1B26", cursor = "#F7AFFF" }
+
+vi_mode_cursor = { text = "#1d2021", cursor = "#ebdbb2" }
+
+# Search Colors
+[colors.search]
+matches = { foreground = "#1d2021", background = "#a7c080" }
+focused_match = { foreground = "#1d2021", background = "#fabd2f" }
+
+# Hints Colors
+[colors.hints]
+start = { foreground = "#1d2021", background = "#fabd2f" }
+end = { foreground = "#1d2021", background = "#665c54" }
+
+# ANSI Colors (Normal)
+[colors.normal]
+black = "#282828"
+#red = "#cc241d"
+red = "#e35a4f"
+green = "#a7c080" # <-- Everforest Green
+yellow = "#e6b96a"
+#blue = "#458588"
+blue = "#5d91a3"
+magenta = "#b16286"
+cyan = "#7fbbb3" # <-- Everforest Aqua
+white = "#d3c6aa" # <-- Everforest Beige
+
+# ANSI Colors (Bright) - Amped up for contrast
+[colors.bright]
+black = "#928374"
+red = "#fb4934"   # <-- Bright Gruvbox Red (Not dull!)
+green = "#b8bb26"
+yellow = "#fabd2f"  # <-- Bright Gruvbox Yellow (Not dull!)
+blue = "#83a598"
+magenta = "#d3869b"
+cyan = "#8ec07c"
+white = "#ebdbb2"  # <-- Bright Gruvbox Cream
+

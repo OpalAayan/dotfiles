@@ -1,0 +1,219 @@
+/* -----------------------------------------------------
+ * Waybar Style - Dracula + Catppuccin Theme
+ * Compact & Vibrant
+ * ----------------------------------------------------- */
+
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "JetBrains Mono Nerd Font", "Font Awesome 6 Free";
+    font-size: 13px;
+    font-weight: bold;
+    min-height: 0;
+}
+
+window#waybar {
+    background: transparent;
+    color: #cdd6f4; /* Catppuccin Text */
+}
+
+/* Island containers */
+.modules-left,
+.modules-center,
+.modules-right {
+    background-color: rgba(40, 42, 54, 0.9); /* Dracula Background */
+    border: 1px solid rgba(180, 190, 254, 0.5); /* Catppuccin Lavender */
+    margin: 3px 6px;
+    padding: 1px 10px;
+    border-radius: 16px;
+    box-shadow: 0 0 5px rgb(255, 255, 255); /* Softer White Glow */
+}
+
+/* All module base styles */
+#memory,
+#temperature,
+#cpu,
+#disk,
+#bluetooth,
+#battery,
+#custom-launcher,
+#custom-power,
+#clock-date,
+#clock-time,
+#network,
+#pulseaudio,
+#workspaces {
+    padding: 0 8px;
+    background: transparent;
+}
+
+/* Clock and Date modules */
+#clock-date, #clock-time {
+    color: #94e2d5; /* Catppuccin Teal */
+    margin-left: 6px;
+}
+
+/* Disk module */
+#disk {
+    color: #f9e2af; /* Catppuccin Yellow */
+}
+
+/* Memory module */
+#memory {
+    color: #a6e3a1; /* Catppuccin Green */
+}
+
+#memory.critical {
+    color: #f38ba8; /* Catppuccin Red */
+    animation: blink 0.7s linear infinite;
+}
+
+/* Temperature module */
+#temperature {
+    color: #89dceb; /* Catppuccin Sky */
+}
+
+#temperature.critical {
+    color: #f38ba8; /* Catppuccin Red */
+    animation: pulse 1s ease-in-out infinite;
+}
+
+/* CPU module */
+#cpu {
+    color: #cba6f7; /* Catppuccin Mauve */
+}
+
+/* Workspace styling */
+#workspaces {
+    padding: 0 2px;
+}
+
+#workspaces button {
+    padding: 0 7px;
+    margin: 0 3px;
+    background: transparent;
+    color: #9399b2; /* Catppuccin Overlay2 */
+    border-radius: 10px;
+    transition: all 0.3s;
+}
+
+#workspaces button:hover {
+    background-color: rgba(69, 71, 90, 0.4); /* Catppuccin Surface0 */
+    color: #b4befe; /* Catppuccin Lavender */
+    box-shadow: none;
+}
+
+#workspaces button.active {
+    background-color: #89b4fa; /* Catppuccin Blue */
+    color: #1e1e2e; /* Catppuccin Base */
+    box-shadow: 0 0 6px rgba(137, 180, 250, 0.6);
+}
+
+#workspaces button.urgent {
+    background-color: #f38ba8; /* Catppuccin Red */
+    color: #1e1e2e;
+    animation: pulse 1s ease-in-out infinite;
+}
+
+/* App Launcher */
+#custom-launcher {
+    color: #89b4fa; /* Catppuccin Blue */
+    font-size: 18px;
+    padding: 0 10px 0 4px;
+}
+
+#custom-launcher:hover {
+    color: #cba6f7; /* Catppuccin Mauve */
+}
+
+/* Power Menu Button */
+#custom-power {
+    background-color: #ff2160; /* Catppuccin Red */
+    color: #1e1e2e; /* Catppuccin Base */
+    font-size: 15px;
+    border-radius: 50px;
+    padding: 0 10px;
+    margin: 4px 6px 4px 10px;
+    box-shadow: 0 0 8px rgba(243, 139, 168, 0.5);
+}
+
+#custom-power:hover {
+    background-color: #f5c2e7; /* Catppuccin Pink */
+    box-shadow: 0 0 12px rgba(243, 139, 168, 0.7);
+}
+
+/* Network module */
+#network {
+    color: #94e2d5; /* Catppuccin Teal */
+}
+
+#network.disconnected {
+    color: #f38ba8; /* Catppuccin Red */
+}
+
+/* Bluetooth module */
+#bluetooth {
+    color: #89b4fa; /* Catppuccin Blue */
+}
+
+#bluetooth.disabled,
+#bluetooth.off {
+    color: #6c7086; /* Catppuccin Subtext0 */
+}
+
+/* Audio module */
+#pulseaudio {
+    color: #fab387; /* Catppuccin Peach */
+}
+
+#pulseaudio.muted {
+    color: #6c7086; /* Catppuccin Subtext0 */
+}
+
+/* Battery module */
+#battery {
+    color: #a6e3a1; /* Catppuccin Green */
+}
+
+#battery.warning {
+    color: #f9e2af; /* Catppuccin Yellow */
+}
+
+#battery.critical {
+    color: #f38ba8; /* Catppuccin Red */
+    animation: blink 0.7s linear infinite;
+}
+
+/* Animations */
+@keyframes blink {
+    to {
+        background-color: rgba(243, 139, 168, 0.5);
+        color: #f38ba8;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(243, 139, 168, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(243, 139, 168, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(243, 139, 168, 0);
+    }
+}
+
+/* Tooltips */
+tooltip {
+    background-color: rgba(40, 42, 54, 0.95); /* Dracula Background */
+    border: 2px solid #b4befe; /* Catppuccin Lavender */
+    border-radius: 12px;
+    padding: 8px;
+    color: #cdd6f4;
+}
+
+tooltip label {
+    color: #cdd6f4;
+    padding: 4px;
+}
