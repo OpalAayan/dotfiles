@@ -1,0 +1,58 @@
+# DreamyPurple.theme
+# Inspired by your kitty and cava color schemes
+
+# Main colors
+theme[main_bg]="#1E1A24"
+theme[main_fg]="#EBD8FF"
+theme[title]="#D6A8FF"
+theme[hi_fg]="#F0E6FF"
+theme[hi_bg]="#2D1B2F"
+
+# Graphs
+theme[graph_text]="#BA9CF9"
+theme[graph_border]="#443155"
+theme[graph_bg]="#1E1A24"
+theme[graph_color1]="#A889F4"
+theme[graph_color2]="#B964D8"
+theme[graph_color3]="#C56FFF"
+theme[graph_color4]="#E09EFF"
+
+# CPU
+theme[cpu_box]="#2D1B2F"
+theme[cpu_text]="#EBD8FF"
+
+# Memory
+theme[mem_box]="#2D1B2F"
+theme[mem_text]="#EBD8FF"
+
+# Network
+theme[net_box]="#2D1B2F"
+theme[net_text]="#EBD8FF"
+
+# Processes
+theme[proc_box]="#2D1B2F"
+theme[proc_text]="#EBD8FF"
+theme[proc_highlight]="#D6A8FF"
+
+# Disks
+theme[disk_box]="#2D1B2F"
+theme[disk_text]="#EBD8FF"
+
+# Temperature
+theme[temp_box]="#2D1B2F"
+theme[temp_text]="#EBD8FF"
+
+# Battery
+theme[battery_box]="#2D1B2F"
+theme[battery_text]="#EBD8FF"
+
+# Misc
+theme[divider]="#443155"
+theme[scrollbar]="#B964D8"
+theme[border]="#443155"
+theme[shadow]="#1E1A24"
+theme[highlight]="#D6A8FF"
+theme[alert]="#FF92D0"
+theme[warning]="#F586C9"
+theme[ok]="#A58FD3"
+theme[info]="#B26ADF"
