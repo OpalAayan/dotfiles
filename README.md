@@ -1,2 +1,2 @@
 # dotfiles
-dotfiles for gnome and Hyprland
+dotfiles for gnome and Hyprland :D
