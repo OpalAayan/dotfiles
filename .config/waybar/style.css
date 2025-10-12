@@ -25,8 +25,8 @@ window#waybar {
     border: 1px solid rgba(180, 190, 254, 0.5); /* Catppuccin Lavender */
     margin: 3px 6px;
     padding: 1px 10px;
-    border-radius: 16px;
-    box-shadow: 0 0 5px rgb(255, 255, 255); /* Softer White Glow */
+    border-radius: 20px;
+    box-shadow: 0px 0px 5px rgb(255, 255, 255); /* Softer White Glow */
 }
 
 /* All module base styles */
