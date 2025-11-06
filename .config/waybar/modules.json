@@ -112,11 +112,13 @@
     // --- Network ---
     "network": {
         "format-wifi": "{icon}",
-        "format-ethernet": "󰈀",
+        "format-ethernet": "󱥸",     // Was . Set to 'loading' icon based on your report.
+        "format-linked": "󰖂",       // Was 󱥸. Set to 'VPN connected' icon based on your report.
+        "format-vpn": "",          // Was 󰖂. Set to 'ethernet' icon.
         "format-disconnected": "󰖪",
         "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
         "tooltip-format": "{ifname}: {ipaddr}/{cidr}\n{essid} ({signalStrength}%)\n⬆ {bandwidthUpBytes} ⬇ {bandwidthDownBytes}",
-        "on-click": "nm-connection-editor"
+        "on-click": "alacritty -e nmtui"
     },
     
     // --- Audio ---

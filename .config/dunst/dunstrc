@@ -70,14 +70,14 @@
 # -----------------------------------------------------------------
 # ADVANCED RULES
 # -----------------------------------------------------------------
-[hide_notify_send]
-    appname = "notify-send"
-    # Title is Dracula Pink
-    format = "<span size='large' color='#ff79c9'><b>%s</b></span>\n%b"
+# [hide_notify_send]
+#     appname = "notify-send"
+#     # Title is Dracula Pink
+#     format = "<span size='large' color='#ff79c9'><b>%s</b></span>\n%b"
 
 [progress_bar]
     summary = "*Volume*" OR "*Brightness*"
-    format = "%i <b>%s</b> %p"
+    format = "<b>%s</b> %p"
     frame_color = "#f1fa8c"  # Dracula Yellow
     background = "#44475aea"
     timeout = 3

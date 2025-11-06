@@ -8,6 +8,7 @@
 #  ╚══╝╚══╝ ╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝╚═╝     ╚══════╝
 #
 #           Wallpaper Changer - Sequential & Cool
+#           (Now with live wallpaper cleanup!)
 #
 
 # --- CONFIGURATION ---
@@ -15,12 +16,27 @@ WALLPAPER_DIR="$HOME/Pictures/HyprWalls"
 STATE_FILE="$HOME/.cache/wallpaper_index.txt"
 
 # --- COOL TRANSITION SETTINGS ---
-# 'any' provides the random "from anywhere" effect you liked.
 TRANSITION_TYPE="any"
 TRANSITION_FPS=144
 TRANSITION_DURATION=2
 
 # --- SCRIPT LOGIC ---
+
+# --- 1. CLEAN SLATE ---
+# Kill any running live wallpaper process.
+if pgrep -x "mpvpaper" > /dev/null; then
+    echo "Stopping mpvpaper..."
+    pkill mpvpaper
+    sleep 0.1 # Give it a moment to die
+fi
+
+# --- 2. ENSURE DAEMON IS RUNNING ---
+# Check if swww-daemon is running, if not, start it.
+if ! pgrep -x "swww-daemon" > /dev/null; then
+    echo "swww-daemon not running, starting it..."
+    swww-daemon &
+    sleep 1 # Give the daemon a second to initialize
+fi
 
 # Define some colors for stylish terminal output
 C_GREEN='\033[0;32m'

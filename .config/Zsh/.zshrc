@@ -114,3 +114,4 @@ export PATH="$HOME/.cargo/bin:$PATH"
 
 #For Vs code
 alias code='code 2>/dev/null'
+
