@@ -1,292 +1,204 @@
 #!/usr/bin/env bash
 # =============================================================================
-# Hyprland Keybinding Cheatsheet Generator - Enhanced Edition
+# Hyprland Keybinding Cheatsheet
 # =============================================================================
-# This script dynamically parses your hyprland.conf to extract keybindings
-# and pairs them with human-readable descriptions from a TSV file.
-# Features category headers, improved formatting, and visual polish.
-# The result is displayed in a searchable fuzzel interface.
+# This script dynamically pulls keybindings from 'hyprctl'
+# and displays them in a searchable fuzzel menu.
+# It prioritizes descriptions from 'bindd'/'bindde' lines.
 # =============================================================================
 
-# Configuration paths
-HYPRLAND_CONFIG="${HOME}/.config/hypr/hyprland.conf"
-DESCRIPTIONS_FILE="${HOME}/.config/hypr/keybind_descriptions.tsv"
+# This map is used to translate keycodes (e.g., code:123) to symbols
+# (e.g., Up) if 'hyprctl' provides a code but not a key name.
+declare -A KEYCODE_SYM_MAP
 
-# ANSI color codes for header styling
-COLOR_HEADER=""  
-COLOR_SEPARATOR=""
-COLOR_RESET=""
+# Populates the KEYCODE_SYM_MAP by parsing your local xkb keymap.
+build_keymap_cache() {
+  local keymap
+  keymap="$(xkbcli compile-keymap)" || {
+    echo "Failed to compile keymap" >&2
+    return 1
+  }
 
-# Check if required files exist
-if [[ ! -f "$HYPRLAND_CONFIG" ]]; then
-    echo "Error: Hyprland config not found at $HYPRLAND_CONFIG" >&2
-    exit 1
-fi
+  while IFS=, read -r code sym; do
+    [[ -z "$code" || -z "$sym" ]] && continue
+    KEYCODE_SYM_MAP["$code"]="$sym"
+  done < <(
+    awk '
+      BEGIN { sec = "" }
+      /xkb_keycodes/ { sec = "codes"; next }
+      /xkb_symbols/  { sec = "syms";  next }
+      sec == "codes" {
+        if (match($0, /<([A-Za-z0-9_]+)>\s*=\s*([0-9]+)\s*;/, m)) code_by_name[m[1]] = m[2]
+      }
+      sec == "syms" {
+        if (match($0, /key\s*<([A-Za-z0-9_]+)>\s*\{\s*\[\s*([^, \]]+)/, m)) sym_by_name[m[1]] = m[2]
+      }
+      END {
+        for (k in code_by_name) {
+          c = code_by_name[k]
+          s = sym_by_name[k]
+          if (c != "" && s != "" && s != "NoSymbol") print c "," s
+        }
+      }
+    ' <<<"$keymap"
+  )
+}
 
-if [[ ! -f "$DESCRIPTIONS_FILE" ]]; then
-    echo "Warning: Descriptions file not found at $DESCRIPTIONS_FILE" >&2
-    echo "Creating template file..." >&2
-    # We'll continue without it and use raw commands as fallback
-fi
+# Looks up a keycode from the cache.
+lookup_keycode_cached() {
+  printf '%s\n' "${KEYCODE_SYM_MAP[$1]}"
+}
 
-# =============================================================================
-# Step 1: Load descriptions into associative array
-# =============================================================================
-declare -A descriptions
+# Replaces 'code:XXX' or 'mouse:XXX' with a human-readable name.
+parse_keycodes() {
+  while IFS= read -r line; do
+    if [[ "$line" =~ code:([0-9]+) ]]; then
+      code="${BASH_REMATCH[1]}"
+      symbol=$(lookup_keycode_cached "$code")
+      echo "${line/code:${code}/$symbol}"
+    elif [[ "$line" =~ mouse:([0-9]+) ]]; then
+      code="${BASH_REMATCH[1]}"
 
-if [[ -f "$DESCRIPTIONS_FILE" ]]; then
-    while IFS=$'\t' read -r cmd desc; do
-        # Skip empty lines and comments (lines starting with #)
-        [[ -z "$cmd" || "$cmd" =~ ^# ]] && continue
-        descriptions["$cmd"]="$desc"
-    done < "$DESCRIPTIONS_FILE"
-fi
+      case "$code" in
+        272) symbol="LMB" ;;  # Left Mouse Button
+        273) symbol="RMB" ;;  # Right Mouse Button
+        274) symbol="MMB" ;;  # Middle Mouse Button
+        *)   symbol="mouse:${code}" ;;
+      esac
 
-# =============================================================================
-# Step 2: Parse variables from hyprland.conf
-# =============================================================================
-declare -A variables
-
-# Extract variable definitions (format: $varname = value)
-while IFS= read -r line; do
-    if [[ "$line" =~ ^\$([a-zA-Z_][a-zA-Z0-9_]*)[[:space:]]*=[[:space:]]*(.+) ]]; then
-        var_name="${BASH_REMATCH[1]}"
-        var_value="${BASH_REMATCH[2]}"
-        # Trim whitespace
-        var_value="${var_value#"${var_value%%[![:space:]]*}"}"
-        var_value="${var_value%"${var_value##*[![:space:]]}"}"
-        variables["$var_name"]="$var_value"
-    fi
-done < "$HYPRLAND_CONFIG"
-
-# =============================================================================
-# Step 3: Parse keybindings from hyprland.conf with category support
-# =============================================================================
-declare -a keybindings_with_categories
-current_category=""
-
-# Function to clean and format key combinations with proper spacing
-format_keys() {
-    local keys="$1"
-    
-    # Replace variables (e.g., $mainMod -> SUPER)
-    for var in "${!variables[@]}"; do
-        keys="${keys//\$$var/${variables[$var]}}"
-    done
-    
-    # Replace mainMod without $ (some configs use it directly)
-    keys="${keys//mainMod/SUPER}"
-    
-    # Clean up modifiers - make them uppercase and consistent
-    keys="${keys//SUPER_/SUPER + }"
-    keys="${keys//Super/SUPER}"
-    keys="${keys//CTRL/CTRL}"
-    keys="${keys//ALT/ALT}"
-    keys="${keys//SHIFT/SHIFT}"
-    
-    # Handle spaces in keys properly
-    keys="${keys// /_SPACE_}" # Temporarily mark spaces
-    
-    # Clean up the final key combination
-    if [[ "$keys" =~ ([^,]+),(.+) ]]; then
-        modifiers="${BASH_REMATCH[1]}"
-        key="${BASH_REMATCH[2]}"
-        
-        # Clean whitespace from both parts
-        modifiers="${modifiers#"${modifiers%%[![:space:]]*}"}"
-        modifiers="${modifiers%"${modifiers##*[![:space:]]}"}"
-        key="${key#"${key%%[![:space:]]*}"}"
-        key="${key%"${key##*[![:space:]]}"}"
-        
-        # Restore spaces in key names
-        key="${key//_SPACE_/ }"
-        modifiers="${modifiers//_SPACE_/ }"
-        
-        # Format with proper plus signs
-        if [[ -n "$modifiers" && "$modifiers" != "" ]]; then
-            # Ensure consistent spacing around plus signs
-            formatted="${modifiers} + ${key}"
-            # Clean up multiple spaces and ensure single space around +
-            formatted=$(echo "$formatted" | sed 's/  */ /g' | sed 's/ *+ */\ + /g')
-            echo "$formatted"
-        else
-            echo "${key//_SPACE_/ }"
-        fi
+      echo "${line/mouse:${code}/$symbol}"
     else
-        # No comma found, single key or modifier
-        echo "${keys//_SPACE_/ }"
+      echo "$line"
     fi
+  done
 }
 
-# Function to create a formatted header
-create_header() {
-    local title="$1"
-    local header_line="━━━━ ${title} ━━━━"
-    echo -e "${COLOR_HEADER}${header_line}${COLOR_RESET}"
+# Fetch dynamic keybindings from Hyprland.
+# This formats the 'hyprctl' JSON output into a simple CSV-like format
+# and maps the numeric modifier mask (e.g., 64) to a text name (e.g., SUPER,).
+dynamic_bindings() {
+  hyprctl -j binds |
+    jq -r '.[] | {modmask, key, keycode, description, dispatcher, arg} | "\(.modmask),\(.key)@\(.keycode),\(.description),\(.dispatcher),\(.arg)"' |
+    sed -r \
+      -e 's/null//' \
+      -e 's/@0//' \
+      -e 's/,@/,code:/' \
+      -e 's/^0,/,/' \
+      -e 's/^1,/SHIFT,/' \
+      -e 's/^4,/CTRL,/' \
+      -e 's/^5,/SHIFT CTRL,/' \
+      -e 's/^8,/ALT,/' \
+      -e 's/^9,/SHIFT ALT,/' \
+      -e 's/^12,/CTRL ALT,/' \
+      -e 's/^13,/SHIFT CTRL ALT,/' \
+      -e 's/^64,/SUPER,/' \
+      -e 's/^65,/SUPER SHIFT,/' \
+      -e 's/^68,/SUPER CTRL,/' \
+      -e 's/^69,/SUPER SHIFT CTRL,/' \
+      -e 's/^72,/SUPER ALT,/' \
+      -e 's/^73,/SUPER SHIFT ALT,/' \
+      -e 's/^76,/SUPER CTRL ALT,/' \
+      -e 's/^77,/SUPER SHIFT CTRL ALT,/'
 }
 
-# Parse the config file line by line
-while IFS= read -r line; do
-    # Check for category header comments
-    if [[ "$line" =~ ^[[:space:]]*#CHEATSHEET_HEADER[[:space:]]+(.+) ]]; then
-        current_category="${BASH_REMATCH[1]}"
-        # Add header to output
-        keybindings_with_categories+=("HEADER|${current_category}")
-        continue
-    fi
-    
-    # Skip regular comments and empty lines
-    [[ "$line" =~ ^[[:space:]]*#[^C] ]] && continue
-    [[ -z "${line// }" ]] && continue
-    
-    # Match bind, binde, bindr lines (skip bindm for mouse)
-    if [[ "$line" =~ ^[[:space:]]*bind[er]?[[:space:]]*= ]]; then
-        # Skip mouse bindings
-        [[ "$line" =~ ^[[:space:]]*bindm ]] && continue
-        
-        # Parse the line - split by comma carefully
-        if [[ "$line" =~ bind[er]?[[:space:]]*=[[:space:]]*([^,]+),[[:space:]]*([^,]+),[[:space:]]*(.+) ]]; then
-            modifiers="${BASH_REMATCH[1]}"
-            key="${BASH_REMATCH[2]}"
-            command="${BASH_REMATCH[3]}"
-            
-            # Clean up whitespace
-            modifiers="${modifiers#"${modifiers%%[![:space:]]*}"}"
-            modifiers="${modifiers%"${modifiers##*[![:space:]]}"}"
-            key="${key#"${key%%[![:space:]]*}"}"
-            key="${key%"${key##*[![:space:]]}"}"
-            command="${command#"${command%%[![:space:]]*}"}"
-            command="${command%"${command##*[![:space:]]}"}"
-            
-            # Format the keys with proper spacing
-            if [[ -n "$modifiers" && "$modifiers" != "" ]]; then
-                formatted_keys=$(format_keys "$modifiers, $key")
-            else
-                formatted_keys=$(format_keys "$key")
-            fi
-            
-            # Look up description or use fallback
-            if [[ -n "${descriptions[$command]}" ]]; then
-                description="${descriptions[$command]}"
-            else
-                # Fallback: clean up the command for display
-                description="→ $command"
-                # Make exec commands more readable
-                description="${description//exec, /Run: }"
-                description="${description//exec,/Run:}"
-            fi
-            
-            # Store the keybinding with category marker
-            keybindings_with_categories+=("BINDING|${formatted_keys}|${description}")
-        fi
-    fi
-done < "$HYPRLAND_CONFIG"
+# Parse and format keybindings
+# This 'awk' script does the heavy lifting:
+# 1. Joins mod + key (e.g., "SUPER + Q").
+# 2. Checks if a description ($3) exists.
+# 3. If YES: Use the description as the action.
+# 4. If NO: Reconstruct the command (e.g., "exec, kitty") as the action.
+# 5. Prints the formatted line.
+parse_bindings() {
+  awk -F, '
+{
+    # Combine the modifier and key (first two fields)
+    key_combo = $1 " + " $2;
+
+    # Clean up: strip leading "+" if present, trim spaces
+    gsub(/^[ \t]*\+?[ \t]*/, "", key_combo);
+    gsub(/[ \t]+$/, "", key_combo);
+
+    # Use description ($3), if set
+    action = $3;
+
+    # If description is empty, build action from dispatcher+arg
+    if (action == "") {
+        # Reconstruct the command from the remaining fields
+        for (i = 4; i <= NF; i++) {
+            action = action $i (i < NF ? "," : "");
+        }
+
+        # Clean up trailing commas, remove leading "exec, ", and trim
+        sub(/,$/, "", action);
+        gsub(/(^|,)[[:space:]]*exec[[:space:]]*,?/, "", action);
+        gsub(/^[ \t]+|[ \t]+$/, "", action);
+        gsub(/[ \t]+/, " ", key_combo);  # Collapse multiple spaces to one
+    }
+
+    if (action != "") {
+        printf "%-35s → %s\n", key_combo, action;
+    }
+}'
+}
+
+# Gives a priority number to certain entries so they appear
+# higher in the list. (e.g., 'Terminal' gets priority 0).
+prioritize_entries() {
+  awk '
+  {
+    line = $0
+    prio = 50  # Default priority
+
+    if (match(line, /Terminal/)) prio = 0
+    if (match(line, /Browser/) && !match(line, /Browser[[:space:]]*\(/)) prio = 1
+    if (match(line, /File Manager/))  prio = 2
+    if (match(line, /Launch App/))  prio = 3
+    if (match(line, /System Menu/))  prio = 5
+    if (match(line, /Power Menu/))   prio = 6
+    if (match(line, /Full Screen/))  prio = 7
+    if (match(line, /Close Window/))  prio = 8
+    if (match(line, /Toggle.*Floating/)) prio = 9
+    if (match(line, /Toggle.*Split/))  prio = 10
+    if (match(line, /Clipboard/))  prio = 12
+    if (match(line, /Color Picker/))  prio = 14
+    if (match(line, /Screenshot/))  prio = 15
+    if (match(line, /Screenrecording/))  prio = 16
+    if (match(line, /(Switch|Next|Former|Previous).*Workspace/)) prio = 17
+    if (match(line, /Move Window to Workspace/)) prio = 18
+    if (match(line, /Move Window Focus/)) prio = 20
+    if (match(line, /Move Window$/))  prio = 21
+    if (match(line, /Resize Window/)) prio = 22
+    if (match(line, /Scratchpad/))  prio = 25
+    if (match(line, /Notification/))  prio = 26
+    if (match(line, /Toggle.*Night Light/)) prio = 29
+    if (match(line, /XF86/)) prio = 99 # Media keys
+
+    # print "priority<TAB>line"
+    printf "%d\t%s\n", prio, line
+  }' |
+    sort -k1,1n -k2,2 | # Sort by priority, then alphabetically
+    cut -f2-            # Remove the priority number
+}
 
 # =============================================================================
-# Step 4: Format and organize the output
+# Main Execution
 # =============================================================================
 
-# First pass: find maximum key length for alignment
-max_key_length=0
-for entry in "${keybindings_with_categories[@]}"; do
-    if [[ "$entry" =~ ^BINDING\|([^|]+)\| ]]; then
-        key="${BASH_REMATCH[1]}"
-        if [[ ${#key} -gt $max_key_length ]]; then
-            max_key_length=${#key}
-        fi
-    fi
-done
+# 1. Build the keycode-to-symbol map
+build_keymap_cache
 
-# Add padding for better readability
-max_key_length=$((max_key_length + 2))
-
-# Second pass: create formatted output with headers
-output=""
-current_section=""
-bindings_in_section=()
-
-for entry in "${keybindings_with_categories[@]}"; do
-    if [[ "$entry" =~ ^HEADER\|(.+) ]]; then
-        # Output previous section's bindings if any
-        if [[ ${#bindings_in_section[@]} -gt 0 ]]; then
-            # Sort bindings in this section
-            IFS=$'\n' sorted=($(sort <<<"${bindings_in_section[*]}"))
-            unset IFS
-            for binding in "${sorted[@]}"; do
-                output="${output}${binding}\n"
-            done
-            output="${output}\n"  # Add spacing after section
-            bindings_in_section=()
-        fi
-        
-        # Add new header
-        header_title="${BASH_REMATCH[1]}"
-        header=$(create_header "$header_title")
-        output="${output}${header}\n"
-        
-    elif [[ "$entry" =~ ^BINDING\|([^|]+)\|(.+) ]]; then
-        key="${BASH_REMATCH[1]}"
-        desc="${BASH_REMATCH[2]}"
-        
-        # Format with proper alignment
-        formatted_line=$(printf "%-${max_key_length}s %s" "$key" "$desc")
-        bindings_in_section+=("$formatted_line")
-    fi
-done
-
-# Output any remaining bindings
-if [[ ${#bindings_in_section[@]} -gt 0 ]]; then
-    IFS=$'\n' sorted=($(sort <<<"${bindings_in_section[*]}"))
-    unset IFS
-    for binding in "${sorted[@]}"; do
-        output="${output}${binding}\n"
-    done
-fi
-
-# Handle case where no categories were defined - show all bindings under "All Keybindings"
-if [[ ! "$output" =~ "━━━━" ]]; then
-    output=""
-    header=$(create_header "All Keybindings")
-    output="${header}\n"
-    
-    # Collect all bindings
-    all_bindings=()
-    for entry in "${keybindings_with_categories[@]}"; do
-        if [[ "$entry" =~ ^BINDING\|([^|]+)\|(.+) ]]; then
-            key="${BASH_REMATCH[1]}"
-            desc="${BASH_REMATCH[2]}"
-            formatted_line=$(printf "%-${max_key_length}s %s" "$key" "$desc")
-            all_bindings+=("$formatted_line")
-        fi
-    done
-    
-    # Sort and add to output
-    IFS=$'\n' sorted=($(sort <<<"${all_bindings[*]}"))
-    unset IFS
-    for binding in "${sorted[@]}"; do
-        output="${output}${binding}\n"
-    done
-fi
-
-# =============================================================================
-# Step 5: Display in fuzzel
-# =============================================================================
-
-# Note: fuzzel doesn't fully support ANSI colors, but some styling will show
-# Remove the trailing newline and pipe to fuzzel 20lines and 85 width is perfect 
-echo -ne "$output" | fuzzel \
+# 2. Run the processing pipeline
+dynamic_bindings |      # Get binds from 'hyprctl'
+  sort -u |             # Remove duplicates
+  parse_keycodes |      # Translate keycodes (e.g., code:272 -> LMB)
+  parse_bindings |      # Format as "Key → Action"
+  prioritize_entries |  # Sort with important binds at the top
+  fuzzel \
     --dmenu \
+    --prompt "🔍 Keybindings: " \
     --lines 20 \
     --width 85 \
-    --prompt "🔍 Keybindings: " \
-    --no-exit-on-keyboard-focus-loss \
-    --font "monospace:size=11" \
-    --background "1e1e2eDD" \
-    --text-color "cdd6f4FF" \
-    --match-color "f38ba8FF" \
-    --selection-color "313244FF" \
-    --selection-text-color "cdd6f4FF" \
-    --border-width 2 \
-    --border-color "b4befeFF" \
-    --horizontal-pad 15 \
-    --vertical-pad 10
+    --font "monospace:size=11"
+  # Add your old color flags here if you want!
+  # --background "1e1e2eDD" \
+  # --text-color "cdd6f4FF" \
