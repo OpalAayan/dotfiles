@@ -28,7 +28,8 @@
     // --- App Launcher (Fuzzel) ---
     "custom/launcher": {
         "format": "󰊠",
-        "tooltip": false,
+        "tooltip": true,
+        "tooltip-format": "Fuzzle",
         "on-click": "fuzzel"
     },
 
@@ -99,7 +100,9 @@
     // --- Time Module (as a clock instance) ---
     "clock#time": {
         "format": " {:%I:%M:%S %p}",
-        "interval": 1
+        "interval": 1,
+        "tooltip":true,
+        "tooltip-format": "Might die soon~"
     },
 
     // --- Power Menu ---
@@ -134,5 +137,22 @@
         "on-click": "pavucontrol",
         "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
         "scroll-step": 5
+    },
+
+ // --- Color picker ---
+     "custom/picker": {
+        "format": "󰃉",
+        "tooltip": true, 
+        "tooltip-format": "Color picker",
+        "on-click": "hyprpicker | wl-copy"
+    },
+// --- Power profile ---
+    "custom/powerpfp": {
+        "format": "{text}",
+        "tooltip": true,
+        "return-type": "json",
+        "exec": "~/.config/hypr/scripts/power-profile.sh get",
+        "interval": 5,
+        "on-click": "~/.config/hypr/scripts/power-profile.sh cycle"
     }
-}
+}    

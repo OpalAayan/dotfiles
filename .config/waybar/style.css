@@ -29,6 +29,16 @@ window#waybar {
     box-shadow: 0px 0px 5px rgb(255, 255, 255); /* Softer White Glow */
 }
 
+/* Center Island Modules */
+/* .modules-center {
+        background-color: transparent;
+        margin: 3px 6px;
+        padding: 1px 10px;
+        border-radius: 20px;
+        border: 1px solid transparent; 
+         box-shadow: none;  No glow 
+    } */
+
 /* All module base styles */
 #memory,
 #temperature,
@@ -42,7 +52,9 @@ window#waybar {
 #clock-time,
 #network,
 #pulseaudio,
-#workspaces {
+#workspaces,
+#custom-picker,
+#custom-powerpfp { 
     padding: 0 8px;
     background: transparent;
 }
@@ -124,6 +136,31 @@ window#waybar {
 
 #custom-launcher:hover {
     color: #cba6f7; /* Catppuccin Mauve */
+}
+
+/* Color Picker */
+#custom-picker {
+    color: #e59bd2; /* Catppuccin Pink */
+    font-size: 16px;
+}
+/* Power Profile */
+#custom-powerpfp {
+    font-size: 16px;
+    padding-left: 10px;
+    padding-right: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+#custom-powerpfp.power-saver {
+    color: #a6e3a1; /* Catppuccin Green */
+}
+
+#custom-powerpfp.balanced {
+    color: #ffcc5e; /* Fuckputin Yellow */
+}
+
+#custom-powerpfp.performance {
+    color: #f38ba8; /* Catppuccin Red */
 }
 
 /* Power Menu Button */

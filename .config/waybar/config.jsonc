@@ -20,8 +20,11 @@
          
     ],
     "modules-center": [
+        "custom/picker",
         "clock#date",
-        "clock#time"
+        "clock#time",
+        "custom/powerpfp"
+        
         
     ],
     "modules-right": [
