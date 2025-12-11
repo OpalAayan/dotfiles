@@ -81,7 +81,7 @@ swww img "$NEXT_WALLPAPER" \
 echo "$NEXT_INDEX" > "$STATE_FILE"
 
 # Send a notification with a thumbnail of the new wallpaper
-notify-send -i "$NEXT_WALLPAPER" "Wallpaper Changed" "$WALLPAPER_BASENAME"
+notify-send -t 1000 -i "$NEXT_WALLPAPER" "Wallpaper Changed" "$WALLPAPER_BASENAME"
 
 # Echo to terminal with some style
 echo -e "${C_GREEN}Wallpaper set to:${C_NC} ${C_BLUE}$WALLPAPER_BASENAME${C_NC}"

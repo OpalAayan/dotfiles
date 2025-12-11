@@ -1,0 +1,142 @@
+/* * ROFI Clipboard Theme - UnixPorn Style
+   * Style: Dracula + Catppuccin Mocha
+   */
+
+configuration {
+    modi: "dmenu";
+    font: "FiraCode Nerd Font mono 12";
+    show-icons: true;
+}
+
+* {
+    /* Palette */
+    bg: #1e1e2e;          /* Base */
+    bg-alt: #313244;      /* Surface0 */
+    fg: #DCD7BA;          /* Text */
+    accent: #cba6f7;      /* Mauve */
+    urgent: #f38ba8;      /* Red */
+    border: #89b4fa;      /* Blue */
+    
+    background-color: transparent;
+    text-color: #A021EF;
+    margin: 0;
+    padding: 0;
+    spacing: 0;
+}
+
+window {
+    width: 600px;
+    height: 500px;
+    background-color: @bg;
+    border: 2px;
+    border-color: @accent;
+    border-radius: 12px;
+}
+
+mainbox {
+    children: [inputbar, listview, message];
+    padding: 12px; /* Increased padding slightly */
+}
+
+/* --- Input Bar --- */
+inputbar {
+    background-color: @bg-alt;
+    border-radius: 10px;
+    padding: 8px; /* Bigger input bar */
+    children: [icon-search, entry, button-wipe];
+    orientation: horizontal;
+    margin: 0 0 12px 0;
+}
+
+icon-search {
+    expand: false;
+    filename: "search";
+    size: 24px;
+    vertical-align: 0.5;
+    margin: 0 10px;
+    background-color: inherit;
+    text-color: @accent;
+    content: "";
+    font: "JetBrainsMono Nerd Font 16";
+}
+
+entry {
+    background-color: inherit;
+    placeholder: "Search Clipboard...";
+    placeholder-color: #6c707fff;
+    vertical-align: 0.5;
+    text-color: #dfbfffff;
+    expand: true;
+}
+
+/* The Wipe Button */
+button-wipe {
+    expand: false;
+    content: "  ";
+    font: "JetBrainsMono Nerd Font 16";
+    text-color: @urgent;
+    background-color: @bg;
+    border-radius: 8px;
+    padding: 4px 8px; 
+    margin: 0 0 0 8px;
+    cursor: pointer;
+    action: "kb-custom-1";
+}
+
+/* --- List View --- */
+listview {
+    columns: 1;
+    lines: 7;         /* Show one more line */
+    cycle: true;
+    dynamic: true;
+    scrollbar: false;
+    spacing: 6px;     /* More breathing room between items */
+}
+
+element {
+    orientation: horizontal;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background-color: @bg;
+    spacing: 12px;    /* Space between icon and text */
+    
+    
+}
+
+element selected {
+    background-color: @bg-alt;
+    text-color: @accent;
+    border: 1px;
+    border-color: @accent;
+}
+
+element-icon {
+    size: 32px;      /* Reduced from 48px to look cleaner in list */
+    vertical-align: 0.5;
+    background-color: transparent;
+}
+
+element-text {
+    vertical-align: 0.5;
+    text-color: inherit;
+}
+
+/* --- Message / Footer --- */
+    message {
+        /* This acts as the container */
+        border: 2px;
+        border-color: @bg-alt; /* Matches the background properly */
+        padding: 10px;
+        margin: 10px 0 0 0;    /* More space from the list */
+        border-radius: 8px;
+        background-color: @bg-alt; 
+    }
+
+    textbox {
+        /* This is the actual text element */
+        background-color: transparent; /* Fixes the color mismatch */
+        text-color: @fg;               /* Uses your main text color */
+        vertical-align: 0.5;
+        horizontal-align: 0.5;
+        border: 0px; 
+    }

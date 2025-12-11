@@ -26,7 +26,7 @@ send_notification() {
     esac
     
     # Send the notification with the Nerd Font icon and text in the body
-    notify-send -h string:x-canonical-private-synchronous:powerprofile \
+    notify-send -t 2000 -h string:x-canonical-private-synchronous:powerprofile \
     "${nerd_icon} ${text_body}" \
     -i "$system_icon"
 }

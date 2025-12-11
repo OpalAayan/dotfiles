@@ -54,7 +54,8 @@ window#waybar {
 #pulseaudio,
 #workspaces,
 #custom-picker,
-#custom-powerpfp { 
+#custom-powerpfp,
+#custom-nightlight { 
     padding: 0 8px;
     background: transparent;
 }
@@ -143,6 +144,8 @@ window#waybar {
     color: #e59bd2; /* Catppuccin Pink */
     font-size: 16px;
 }
+
+
 /* Power Profile */
 #custom-powerpfp {
     font-size: 16px;
@@ -177,6 +180,16 @@ window#waybar {
 #custom-power:hover {
     background-color: #f5c2e7; /* Catppuccin Pink */
     box-shadow: 0 0 12px rgba(243, 139, 168, 0.7);
+}
+
+/* Night Light */
+ /* #custom-nightlight {
+    color: #9399b2; 
+    font-size: 16px;
+}  */
+
+#custom-nightlight.active {
+    color: #fab387; /* Catppuccin Peach (on) */
 }
 
 /* Network module */

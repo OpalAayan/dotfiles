@@ -16,7 +16,7 @@
         "disk",
         "memory",
         "cpu",
-        "temperature",
+        "temperature"
          
     ],
     "modules-center": [
@@ -31,6 +31,7 @@
         "hyprland/workspaces",
         "network",
         "bluetooth",
+        //"custom/nightlight",
         "pulseaudio",
         "battery",
         "custom/power"

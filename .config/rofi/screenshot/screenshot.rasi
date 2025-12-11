@@ -1,0 +1,71 @@
+/**
+ * Fixed Rofi Theme
+ * - Fixed "Weird Selection" by moving padding to element and making text transparent.
+ * - Fixed syntax error (extra closing brace).
+ */
+
+configuration {
+    show-icons: false;
+}
+
+* {
+    bg:                  #161320;
+    fg:                  #96CDF8;
+    bgAlt:               #1E1E2E;
+    background-color:    @bg;
+    text-color:          @fg;
+}
+
+window {
+    transparency:        "real";
+    width:               100px;
+    height:              320px;
+    location:            east;
+    x-offset:            -10px;
+    border-radius:       20px;
+}
+
+mainbox {
+    children: [ listview ];
+    background-color: @bg;
+}
+
+listview {
+    cycle:               true;
+    dynamic:             true;
+    layout:              vertical;
+    padding:             10px;
+    spacing:             10px; /* Adds space between buttons */
+    background-color:    transparent;
+}
+
+element {
+    /* Padding here defines the button size */
+    padding:             15px 0px; 
+    border-radius:       8px;
+    background-color:    transparent;
+    text-color:          @fg;
+    cursor:              pointer;
+}
+
+element-text {
+    /* Font settings */
+    font:                "FiraCode Nerd Font 35";
+    
+    /* Alignment */
+    horizontal-align:    0.5;
+    vertical-align:      0.5;
+
+    /* CRITICAL FIX: Make background transparent so element's border-radius works */
+    background-color:    transparent;
+    text-color:          inherit;
+    
+    /* Remove padding/margin here to prevent clipping artifacts */
+    margin:              0px;
+    padding:             0px;
+}
+
+element selected {
+    background-color:    @fg;
+    text-color:          @bg;
+}

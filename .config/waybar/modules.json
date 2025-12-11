@@ -138,14 +138,15 @@
         "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
         "scroll-step": 5
     },
-
- // --- Color picker ---
-     "custom/picker": {
+// --- Color Picker ---
+    "custom/picker": {
         "format": "󰃉",
         "tooltip": true, 
         "tooltip-format": "Color picker",
-        "on-click": "hyprpicker | wl-copy"
+        "on-click": "~/.config/hypr/scripts/picker.sh"
     },
+
+
 // --- Power profile ---
     "custom/powerpfp": {
         "format": "{text}",
@@ -154,5 +155,19 @@
         "exec": "~/.config/hypr/scripts/power-profile.sh get",
         "interval": 5,
         "on-click": "~/.config/hypr/scripts/power-profile.sh cycle"
-    }
+    },
+
+// // --- Night light ---
+// "custom/nightlight": {
+//         "format": "󰖔",
+//         "tooltip": true,
+//         "return-type" :"json",
+//         // Runs every 3s to get the status
+//         "exec": "~/.config/hypr/scripts/toggle_nightlight.sh get",
+//         "interval": 3,
+//         // --- actions ---
+//         "on-click": "~/.config/hypr/scripts/toggle_nightlight.sh",
+       
+// }
+
 }    

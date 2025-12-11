@@ -115,3 +115,27 @@ export PATH="$HOME/.cargo/bin:$PATH"
 #For Vs code
 alias code='code 2>/dev/null'
 
+#For awrit(terminal web broswer)
+export PATH="$HOME/.local/bin:$PATH"
+
+# 1. Define a widget that forces a new line
+# This ignores key codes and just pushes a \n into the buffer
+function magic-enter {
+  if [[ -n $BUFFER ]]; then
+    LBUFFER+=$'\n'
+  else
+    # If the line is empty, just behave like normal enter
+    zle accept-line
+  fi
+}
+
+# 2. Register the widget
+zle -N magic-enter
+
+# 3. Bind Alt+Enter to it
+# We bind BOTH common Enter codes to be safe based on your cat output
+bindkey '^[^M' magic-enter
+bindkey '^[^J' magic-enter
+
+# 4. Make the secondary prompt invisible so it looks like one block
+PROMPT2=' '

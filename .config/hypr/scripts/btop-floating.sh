@@ -5,3 +5,4 @@ kitty --class btop-floating \
   -o "window.padding.x=0" \
   -o "window.padding.y=0" \
   -e btop
+

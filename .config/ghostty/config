@@ -1,0 +1,61 @@
+# --- Background Image Settings ---
+background-image =  /home/aayanopal/Pictures/Wallpaper/demo-removebg.png
+background-image-fit = cover
+background-image-opacity = 0.5
+
+# --- Font Settings ---
+font-family = "FiraCode Nerd Font"
+font-size = 13.5
+# This makes the "rich" colors pop more against the dark background
+font-thicken = true
+
+# --- Theme: Cosmic Abyss (Custom) ---
+# Deep, dark, rich void background. Not grey, but a very deep ink-blue/black.
+background = #0b0f16
+foreground = #a9b1d6
+selection-background = #364A82
+selection-foreground = #c0caf5
+
+# Cursor (Electric Cyan to cut through the dark)
+cursor-color = #0DB9D7
+cursor-text = #0b0f16
+cursor-style = underline
+cursor-style-blink = true
+
+# --- Palette (Rich & Saturated) ---
+palette = 0=#15161e
+palette = 1=#f7768e
+palette = 2=#9ece6a
+palette = 3=#e0af68
+palette = 4=#7aa2f7
+palette = 5=#bb9af7
+palette = 6=#7dcfff
+palette = 7=#a9b1d6
+palette = 8=#414868
+palette = 9=#f7768e
+palette = 10=#9ece6a
+palette = 11=#e0af68
+palette = 12=#7aa2f7
+palette = 13=#bb9af7
+palette = 14=#7dcfff
+palette = 15=#c0caf5
+
+# --- Window & Layout ---
+# 0.90 opacity preserves the "deep dark" look while keeping it modern
+background-opacity = 0.90
+window-padding-x = 12
+window-padding-y = 12
+window-decoration = false
+confirm-close-surface = false
+
+# --- Shell Integration ---
+# Keeps the prompt clean
+shell-integration-features = no-cursor,no-sudo
+
+# --- Keybindings (No Left Shift) ---
+keybind = ctrl+equal=increase_font_size:1
+keybind = ctrl+minus=decrease_font_size:1
+keybind = ctrl+0=reset_font_size
+
+# --- No bell ---
+bell-features =

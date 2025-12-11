@@ -54,8 +54,8 @@
             "path": "/usr/lib/jvm/java-17-openjdk"
         },
         {
-            "name": "JavaSE-24",
-            "path": "/usr/lib/jvm/java-24-openjdk",
+            "name": "JavaSE-25",
+            "path": "/usr/lib/jvm/java-25-openjdk",
             "default": true
         }
     ],
@@ -79,10 +79,10 @@
             },
             "path": "bash"
         },
-        "Java 24 (Default)": {
+        "Java 25 (Default)": {
             "overrideName": true,
             "env": {
-                "JAVA_HOME": "/usr/lib/jvm/java-24-openjdk"
+                "JAVA_HOME": "/usr/lib/jvm/java-25-openjdk"
             },
             "path": "bash"
         }
@@ -94,11 +94,11 @@
     "maven.terminal.customEnv": [
         {
             "environmentVariable": "JAVA_HOME",
-            "value": "/usr/lib/jvm/java-24-openjdk"
+            "value": "/usr/lib/jvm/java-25-openjdk"
         }
     ],
     "maven.executable.path": "/usr/bin/mvn",
-    "java.import.gradle.java.home": "/usr/lib/jvm/java-24-openjdk",
+    "java.import.gradle.java.home": "/usr/lib/jvm/java-25-openjdk",
     "java.import.gradle.home": "/usr/share/gradle", // Change if using another location
 
     // --- UI and Styling ---
@@ -115,8 +115,8 @@
     "editor.cursorStyle": "line-thin",
     "editor.overtypeCursorStyle": "underline-thin",
     "terminal.integrated.fontFamily": "MesloLGS Nerd Font Mono",
-    "editor.fontFamily": "'FiraCode Nerd Font', monospace",
-    "editor.fontLigatures": true,
+    "editor.fontFamily": "'FiraCode Nerd Font mono', monospace",
+    "editor.fontLigatures": false,
     "security.workspace.trust.untrustedFiles": "open",
     "security.workspace.trust.enabled": false,
     "workbench.startupEditor": "none",
@@ -127,5 +127,8 @@
     "workbench.secondarySideBar.defaultVisibility": "hidden",
     "workbench.welcomePage.walkthroughs.openOnInstall": false,
     "java.help.firstView": "none",
-    "jdk.telemetry.enabled": false
+    "jdk.telemetry.enabled": false,
+    "geminicodeassist.project": "calcium-augury-r549p",
+    "geminicodeassist.displayInlineContextHint": false,
+    "diffEditor.codeLens": true
 }

@@ -1,90 +1,80 @@
 #!/bin/bash
-# A unified script for volume and brightness notifications with dynamic icons.
-# Now with a 'volume_mute' mode that plays a sound on unmute.
 
-# Usage: ./notify_ctl.sh [volume|volume_mute|brightness]
+# Usage: ./brigthervolume.sh [up|down|mute|brightness_up|brightness_down]
 
-MODE=$1
+action=$1
+# Custom appname to target in dunstrc (Fixes watermark later)
+APPNAME="volume_overlay"
+# Notification ID to replace (prevents stack lag)
+NOTIF_ID=9991
 
-# --- CONFIG ---
-# This is a standard system sound, should work on most distros
-UNMUTE_SOUND="/usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
-# --- END CONFIG ---
+# --- Volume Function (Now 3% step) ---
+handle_volume() {
+    case $1 in
+        up)   wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 3%+ ;;
+        down) wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%- ;;
+        mute) wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle ;;
+    esac
 
-
-# --- Function to get volume status and send notification ---
-# We create this function so 'volume' and 'volume_mute' can both use it.
-get_volume_notification() {
-    # Get volume and mute status
-    VOLUME=$(pamixer --get-volume)
-    MUTED=$(pamixer --get-mute)
-
-    # --- START of NEW DYNAMIC ICON LOGIC ---
-    # Set icon based on status, checking in order of precedence
-    if [ "$MUTED" = "true" ]; then
-        ICON="" # Muted
-    elif [ "$VOLUME" -gt 100 ]; then
-        ICON="" # Over-amplified (100%+)
-    elif [ "$VOLUME" -eq 100 ]; then
-        ICON="" # 100%
-    elif [ "$VOLUME" -ge 60 ]; then
-        ICON="󱑽" # 60% - 99%
-    elif [ "$VOLUME" -ge 42 ]; then
-        ICON=""  # 42% - 59%   
-    elif [ "$VOLUME" -ge 1 ]; then
-        ICON="" # 1% - 33%
+    # Get Status
+    status=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
+    
+    # Parse Volume (0.03 -> 3)
+    vol_float=$(echo "$status" | awk '{print $2}')
+    vol=$(echo "$vol_float * 100" | bc | awk '{print int($1)}')
+    
+    # Parse Mute & Icons
+    if [[ "$status" == *"[MUTED]"* ]]; then
+        icon=""
+        text="Muted"
     else
-        ICON="" # 0% (but not muted)
+        if [ "$vol" -gt 100 ]; then icon="";
+        elif [ "$vol" -eq 100 ]; then icon="";
+        elif [ "$vol" -ge 60 ]; then icon="󱑽";
+        elif [ "$vol" -ge 42 ]; then icon="";
+        elif [ "$vol" -ge 1 ]; then icon="";
+        else icon=""; fi
+        text="$vol%"
     fi
-    # --- END of NEW DYNAMIC ICON LOGIC ---
 
-    # Send notification (with the icon in the text, as we fixed)
-    dunstify -h string:x-dunst-stack-tag:"Volume" -h int:value:"$VOLUME" -u low --replace=9991 "$ICON Volume"
+    # Send Notification
+    dunstify -a "$APPNAME" -u low -r "$NOTIF_ID" \
+             -h int:value:"$vol" \
+             -h string:x-dunst-stack-tag:"volume" \
+             "$icon $text"
+             
+    # Play sound only if unmuting
+    if [ "$1" == "mute" ] && [[ "$status" != *"[MUTED]"* ]]; then
+        paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga &
+    fi
 }
-# --- End of Function ---
 
+# --- Brightness Function ---
+handle_brightness() {
+    # 1. Change Brightness
+    case $1 in
+        up)   brightnessctl set 5%+ ;;
+        down) brightnessctl set 5%- ;;
+    esac
 
-# Use a case statement to handle different modes
-case $MODE in
+    # 2. Get Current Brightness % (Clean parsing)
+    bright=$(brightnessctl -m | awk -F, '{print substr($4, 0, length($4)-1)}')
 
-volume)
-    # Called by Volume Up/Down (binde)
-    # No sound, just the notification
-    get_volume_notification
-    ;;
+    # 3. Set Icon
+    if [ "$bright" -gt 66 ]; then icon="󰃠";
+    elif [ "$bright" -gt 33 ]; then icon="󰃟";
+    else icon="󰃞"; fi
 
-volume_mute)
-    # Called by Mute key (bind)
-    
-    # 1. Toggle the mute
-    pamixer -t
-    
-    # 2. Show the new notification
-    get_volume_notification
-    
-    # 3. Check if we just UNMUTED, and play sound
-    if [ "$(pamixer --get-mute)" = "false" ]; then
-        # Play sound in the background (&) so it doesn't block the script
-        # We also redirect output to /dev/null to prevent any 'paplay' spam
-        paplay "$UNMUTE_SOUND" &> /dev/null &
-    fi
-    ;;
+    # 4. Notify
+    dunstify -a "$APPNAME" -u low -r "$NOTIF_ID" \
+             -h int:value:"$bright" \
+             -h string:x-dunst-stack-tag:"brightness" \
+             "$icon $bright%"
+}
 
-brightness)
-    # Get brightness percentage
-    BRIGHTNESS=$(brightnessctl -m | awk -F, '{print substr($4, 0, length($4)-1)}')
-
-    # Set icon based on level
-    if [ "$BRIGHTNESS" -gt 66 ]; then
-        ICON="󰃠" # High Brightness
-    elif [ "$BRIGHTNESS" -gt 33 ]; then
-        ICON="󰃟" # Mid Brightness
-    else
-        ICON="󰃞" # Low Brightness
-    fi
-
-    # Send notification (with the icon in the text, as we fixed)
-    dunstify -h string:x-dunst-stack-tag:"Brightness" -h int:value:"$BRIGHTNESS" -u low --replace=9991 "$ICON Brightness"
-    ;;
-
+# --- Main Switch ---
+case $action in
+    up|down|mute) handle_volume "$action" ;;
+    brightness_up) handle_brightness "up" ;;
+    brightness_down) handle_brightness "down" ;;
 esac
