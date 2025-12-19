@@ -21,6 +21,7 @@
     ],
     "modules-center": [
         "custom/picker",
+        "custom/newday",
         "clock#date",
         "clock#time",
         "custom/powerpfp"

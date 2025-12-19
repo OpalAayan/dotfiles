@@ -80,7 +80,7 @@
     // --- Date Module (as a clock instance) ---
     "clock#date": {
         "format": " {:%a %d}",
-        "interval": 3600,
+        "interval": 10,
         "tooltip-format": "<tt><small>{calendar}</small></tt>",
         "calendar": {
             "mode": "year",
@@ -95,6 +95,15 @@
                 "today": "<span color='#f38ba8'><b><u>{}</u></b></span>"
             }
         }
+    },
+
+    // --- New Day Alert (Ghost Module) ---
+    "custom/newday": {
+        "format": "{}",
+        "return-type": "json",
+        "interval": 1,
+        "exec": "~/.config/hypr/scripts/newday_alert.sh",
+        "tooltip": false
     },
     
     // --- Time Module (as a clock instance) ---

@@ -55,7 +55,8 @@ window#waybar {
 #workspaces,
 #custom-picker,
 #custom-powerpfp,
-#custom-nightlight { 
+#custom-nightlight,
+#custom-newday{ 
     padding: 0 8px;
     background: transparent;
 }
@@ -64,6 +65,21 @@ window#waybar {
 #clock-date, #clock-time {
     color: #94e2d5; /* Catppuccin Teal */
     margin-left: 6px;
+}
+/* --- New Day Alert --- */
+#custom-newday {
+    background-color: #b4befe;  /* Lavender background */
+    color: #1e1e2e;             /* Dark text for contrast */
+    border-radius: 12px;
+    padding: 0 10px;
+    margin-right: 5px;          /* Space between alert and date */
+    font-weight: bold;
+}
+
+/* Reusing your existing blink animation for the flash effect */
+#custom-newday.alert {
+    animation: blink 0.5s linear infinite; 
+    box-shadow: 0 0 10px rgba(180, 190, 254, 0.8); /* Glow effect */
 }
 
 /* Disk module */

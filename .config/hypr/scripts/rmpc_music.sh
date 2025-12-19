@@ -1,23 +1,26 @@
 #!/bin/bash
 
-# 1. Check if MPD is running
-if pgrep -x "mpd" >/dev/null; then
-  echo "MPD is already running."
-  MPD_WAS_RUNNING=1
+# 1. Start MPD if it's not running
+if ! pgrep -x "mpd" > /dev/null; then
+    echo "Starting MPD..."
+    mpd
+    
+    # Wait for MPD to be ready (Loop for 5 seconds)
+    for i in {1..5}; do
+        # Check if port 6600 is open
+        if echo "close" | nc 127.0.0.1 6600 >/dev/null 2>&1; then
+            break
+        fi
+        echo "Waiting for MPD socket..."
+        sleep 0.5
+    done
 else
-  echo "Starting MPD..."
-  mpd
-  MPD_WAS_RUNNING=0
+    echo "MPD is already running."
 fi
 
-# 2. Launch the client
+# 2. Launch the client (Script pauses here until you close rmpc)
 rmpc
 
-# 3. Cleanup logic
-if [ $MPD_WAS_RUNNING -eq 0 ]; then
-  echo "Stopping MPD (since we started it)..."
-  mpd --kill
-else
-  echo "Leaving MPD running (since it was already on)."
-fi
-
+# 3. Cleanup: Kill MPD immediately after rmpc closes
+echo "Stopping MPD..."
+pkill -x mpd

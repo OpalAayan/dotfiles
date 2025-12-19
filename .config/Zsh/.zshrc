@@ -29,7 +29,7 @@ export JAVA_HOME=/usr/lib/jvm/java-24-openjdk
 export PATH="$JAVA_HOME/bin:$PATH"
 
 # --- Optional JavaFX SDK ---
-export JAVAFX_HOME=~/Downloads/javafx-sdk-24/lib  
+export JAVAFX_HOME="$HOME/.local/lib/javafx-sdk-24.0.1/lib"
 export CLASSPATH=$CLASSPATH:$JAVAFX_HOME
 
 # --- Optional: Switch to Java 17 for tools like BlueJ ---
@@ -115,8 +115,14 @@ export PATH="$HOME/.cargo/bin:$PATH"
 #For Vs code
 alias code='code 2>/dev/null'
 
+#For manually installed Bluej 
+alias bluej="~/.local/lib/bluej/bluej"
+
 #For awrit(terminal web broswer)
 export PATH="$HOME/.local/bin:$PATH"
+
+#For rmpc to run with  mpd
+alias rmpc="~/.config/hypr/scripts/rmpc_music.sh"
 
 # 1. Define a widget that forces a new line
 # This ignores key codes and just pushes a \n into the buffer

@@ -30,7 +30,8 @@ get_current_temp() {
 turn_off_wlsunset() {
     killall wlsunset 2>/dev/null
     echo "$MAX_TEMP" > "$STATE_FILE"
-    
+    #while pgrep -x wlsunset >/dev/null; do sleep 0.01; done
+
     # Notify Off
     dunstify -a "$APPNAME" -u low -r "$NOTIF_ID" \
              -h int:value:0 \
