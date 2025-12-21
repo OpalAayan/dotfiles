@@ -4,11 +4,11 @@
 (
     address: "127.0.0.1:6600",
     password: None,
-    theme: None,
+    theme: Some("theme"), // Linked to theme.ron
     cache_dir: None,
     on_song_change: None,
     volume_step: 5,
-    max_fps: 30,
+    max_fps: 60,
     scrolloff: 0,
     wrap_navigation: false,
     enable_mouse: true,
@@ -21,14 +21,37 @@
     ignore_leading_the: false,
     browser_song_sort: [Disc, Track, Artist, Title],
     directories_sort: SortFormat(group_by_type: true, reverse: false),
+    
+    // --- ALBUM ART SETTINGS ---
     album_art: (
         method: Auto,
         order: EmbeddedFirst,
         max_size_px: (width: 1200, height: 1200),
         disabled_protocols: ["http://", "https://"],
-        vertical_align: Center,
+        vertical_align: Top,
         horizontal_align: Center,
     ),
+
+    // --- CAVA BACKEND ---
+    cava: (
+        framerate: 60,
+        autosens: true,
+        input: (
+            method: Fifo,
+            source: "/tmp/mpd.fifo",
+            sample_rate: 44100,
+            channels: 2,
+            sample_bits: 16,
+        ),
+        smoothing: (
+            noise_reduction: 77,
+            monstercat: false,
+            waves: false,
+        ),
+        // Ensures backend initializes correctly
+        eq: [],
+    ),
+
     keybinds: (
         global: {
             ":":       CommandMode,
@@ -61,6 +84,9 @@
             "O":       ShowOutputs,
             "P":       ShowDecoders,
             "R":       AddRandom,
+            "<Space>": TogglePause,
+            "<Left>":  SeekBack,
+            "<Right>": SeekForward,
         },
         navigation: {
             "k":         Up,
@@ -69,8 +95,6 @@
             "l":         Right,
             "<Up>":      Up,
             "<Down>":    Down,
-            "<Left>":    Left,
-            "<Right>":   Right,
             "<C-k>":     PaneUp,
             "<C-j>":     PaneDown,
             "<C-h>":     PaneLeft,
@@ -82,10 +106,9 @@
             "r":         Rename,
             "n":         NextResult,
             "g":         Top,
-            "<Space>":   Select,
+            "<CR>":      Confirm, 
             "<C-Space>": InvertSelection,
             "G":         Bottom,
-            "<CR>":      Confirm,
             "i":         FocusInput,
             "J":         MoveDown,
             "<C-d>":     DownHalf,
@@ -127,36 +150,28 @@
         album_sort_by: Date,
         album_date_tags: [Date],
     ),
-tabs: [
-    (
-        name: "Queue",
-        pane: Split(
-            direction: Horizontal,
-            panes: [(size: "60%", pane: Pane(Queue)), (size: "40%", pane: Pane(AlbumArt))],
+    tabs: [
+        (
+            name: "Queue",
+            pane: Split(
+                direction: Horizontal,
+                panes: [
+                    (size: "60%", pane: Pane(Queue)),
+                    (size: "40%", pane: Split(
+                        direction: Vertical,
+                        panes: [
+                            (size: "70%", pane: Pane(AlbumArt)),
+                            (size: "30%", pane: Pane(Cava)),
+                        ],
+                    )),
+                ],
+            ),
         ),
-    ),
-    (
-        name: "Directories",
-        pane: Pane(Directories),
-    ),
-    (
-        name: "Artists",
-        pane: Pane(Artists),
-    ),
-    (
-        name: "Album Artists",
-        pane: Pane(AlbumArtists),
-    ),
-    (
-        name: "Albums",
-        pane: Pane(Albums),
-    ),
-    (
-        name: "Playlists",
-        pane: Pane(Playlists),
-    ),
-    (
-        name: "Search",
-        pane: Pane(Search),
-    ),
-],)
+        (name: "Directories", pane: Pane(Directories)),
+        (name: "Artists", pane: Pane(Artists)),
+        (name: "Album Artists", pane: Pane(AlbumArtists)),
+        (name: "Albums", pane: Pane(Albums)),
+        (name: "Playlists", pane: Pane(Playlists)),
+        (name: "Search", pane: Pane(Search)),
+    ],
+)
