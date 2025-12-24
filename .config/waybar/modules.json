@@ -80,6 +80,7 @@
     // --- Date Module (as a clock instance) ---
     "clock#date": {
         "format": " {:%a %d}",
+        "on-click": "gnome-calendar",
         "interval": 10,
         "tooltip-format": "<tt><small>{calendar}</small></tt>",
         "calendar": {
@@ -88,11 +89,11 @@
             "weeks-pos": "right",
             "on-scroll": 1,
             "format": {
-                "months": "<span color='#fab387'><b>{}</b></span>",
-                "days": "<span color='#f5c2e7'><b>{}</b></span>",
-                "weeks": "<span color='#94e2d5'><b>W{}</b></span>",
-                "weekdays": "<span color='#f9e2af'><b>{}</b></span>",
-                "today": "<span color='#f38ba8'><b><u>{}</u></b></span>"
+                     "months": "<span color='#fab387'><b>{}</b></span>",
+                     "days": "<span color='#cdd6f4'><b>{}</b></span>",
+                     "weeks": "<span color='#94e2d5'><b>W{}</b></span>",
+                     "weekdays": "<span color='#f9e2af'><b>{}</b></span>",
+                     "today": "<span color='#1e1e2e' background='#f38ba8'><b>{}</b></span>"
             }
         }
     },
@@ -114,6 +115,16 @@
         "tooltip-format": "Might die soon~"
     },
 
+    // --- Dynamic Clock (Script) ---
+  "custom/dynamic_clock": {
+        "exec": "~/.config/hypr/scripts/dynamic_clock.sh",
+        "interval": 1,
+        "format": "{}",
+        "tooltip": true,
+        "tooltip-format": "Might die soon~"
+    },
+
+    
     // --- Power Menu ---
     "custom/power": {
         "format": "⏻",

@@ -23,7 +23,8 @@
         "custom/picker",
         "custom/newday",
         "clock#date",
-        "clock#time",
+        "custom/dynamic_clock",
+        //"clock#time",
         "custom/powerpfp"
         
         

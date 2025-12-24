@@ -62,10 +62,21 @@ window#waybar {
 }
 
 /* Clock and Date modules */
-#clock-date, #clock-time {
-    color: #94e2d5; /* Catppuccin Teal */
+ #custom-dynamic_clock {
+    /*color: #94e2d5;*/ /* Catppuccin Teal */  /* white is better*/
     margin-left: 6px;
+    padding: 0;
+    background: transparent;
 }
+
+#clock-date {
+    /*color: #94e2d5;*/ /* Catppuccin Teal */  /* white is better*/
+    margin-left: 6px;
+    padding: 0;
+    background: transparent;
+}
+
+
 /* --- New Day Alert --- */
 #custom-newday {
     background-color: #b4befe;  /* Lavender background */
@@ -282,4 +293,9 @@ tooltip {
 tooltip label {
     color: #cdd6f4;
     padding: 4px;
+}
+/* This targets ONLY the clock/calendar tooltip */
+#clock-date tooltip {
+    background-color: #1e1e2e; 
+    border: 2px solid #fab387;
 }
