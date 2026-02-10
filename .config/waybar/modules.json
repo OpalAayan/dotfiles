@@ -10,11 +10,16 @@
         "format-plugged": " {capacity}%",
         "format-alt": "{icon} {time}",
         "format-missing": "󱟩",
-        "format-icons": [" ", " ", " ", " ", " "],
+        "format-icons": [
+            " ",
+            " ",
+            " ",
+            " ",
+            " "
+        ],
         "interval": 5
     },
-
-   // --- Bluetooth ---
+    // --- Bluetooth ---
     "bluetooth": {
         "format": " {status}",
         "format-disabled": " OFF",
@@ -24,7 +29,6 @@
         "on-click": "blueberry",
         "format-no-controller": ""
     },
-    
     // --- App Launcher (Fuzzel) ---
     "custom/launcher": {
         "format": "󰊠",
@@ -32,7 +36,6 @@
         "tooltip-format": "Fuzzle",
         "on-click": "fuzzel"
     },
-
     // --- Disk Usage ---
     "disk": {
         "interval": 30,
@@ -40,14 +43,12 @@
         "path": "/",
         "on-click": "kitty -e nohup baobab &"
     },
-
     // --- Memory (Updated) ---
     "memory": {
         "format": " {percentage}%",
         // "on-click": "kitty -e btop"
         "on-click": "~/.config/hypr/scripts/btop-floating.sh"
     },
-    
     // --- Temperature ---
     "temperature": {
         "thermal-zone": 0,
@@ -56,27 +57,33 @@
         "critical-threshold": 80,
         "interval": 5
     },
-    
     // --- CPU Usage (Updated) ---
     "cpu": {
         "format": " {usage}%",
         //"on-click": "kitty -e btop"
-    "on-click": "~/.config/hypr/scripts/btop-floating.sh"
-
+        "on-click": "~/.config/hypr/scripts/btop-floating.sh"
     },
-    
     // --- Workspaces ---
     "hyprland/workspaces": {
         "format": "{icon}",
         "on-click": "activate",
         "format-icons": {
-            "1": "󰲠", "2": "󰲢", "3": "󰲤", "4": "󰲦", "5": "󰲨",
-            "6": "󰲪", "7": "󰲬", "8": "󰲮", "9": "󰲰", "10": "󰿬",
+            "1": "󰲠",
+            "2": "󰲢",
+            "3": "󰲤",
+            "4": "󰲦",
+            "5": "󰲨",
+            "6": "󰲪",
+            "7": "󰲬",
+            "8": "󰲮",
+            "9": "󰲰",
+            "10": "󰿬",
             "default": ""
         },
-        "persistent-workspaces": { "*": 4 }
+        "persistent-workspaces": {
+            "*": 4
+        }
     },
-    
     // --- Date Module (as a clock instance) ---
     "clock#date": {
         "format": " {:%a %d}",
@@ -89,15 +96,15 @@
             "weeks-pos": "right",
             "on-scroll": 1,
             "format": {
-                     "months": "<span color='#fab387'><b>{}</b></span>",
-                     "days": "<span color='#cdd6f4'><b>{}</b></span>",
-                     "weeks": "<span color='#94e2d5'><b>W{}</b></span>",
-                     "weekdays": "<span color='#f9e2af'><b>{}</b></span>",
-                     "today": "<span color='#1e1e2e' background='#f38ba8'><b>{}</b></span>"
+                "months": "<span color='#fab387'><b>{}</b></span>",
+                "days": "<span color='#cdd6f4'><b>{}</b></span>",
+                "weeks": "<span color='#94e2d5'><b>W{}</b></span>",
+                "weekdays": "<span color='#f9e2af'><b>{}</b></span>",
+                //"today": "<span color='#f38ba8'><b>{}</b></span>" //to just get the date in diffrent color
+                "today": "<span color='#1e1e2e' background='#f38ba8'><b>{}</b></span>"
             }
         }
     },
-
     // --- New Day Alert (Ghost Module) ---
     "custom/newday": {
         "format": "{}",
@@ -106,44 +113,44 @@
         "exec": "~/.config/hypr/scripts/newday_alert.sh",
         "tooltip": false
     },
-    
     // --- Time Module (as a clock instance) ---
     "clock#time": {
         "format": " {:%I:%M:%S %p}",
         "interval": 1,
-        "tooltip":true,
+        "tooltip": true,
         "tooltip-format": "Might die soon~"
     },
-
     // --- Dynamic Clock (Script) ---
-  "custom/dynamic_clock": {
+    "custom/dynamic_clock": {
         "exec": "~/.config/hypr/scripts/dynamic_clock.sh",
         "interval": 1,
         "format": "{}",
         "tooltip": true,
         "tooltip-format": "Might die soon~"
     },
-
-    
     // --- Power Menu ---
     "custom/power": {
         "format": "⏻",
         "tooltip": false,
-        "on-click": "~/.config/hypr/scripts/powermenu.sh"
+        "on-click": "~/.config/wlogout/launch.sh"
     },
-    
     // --- Network ---
     "network": {
         "format-wifi": "{icon}",
-        "format-ethernet": "󱥸",     // Was . Set to 'loading' icon based on your report.
-        "format-linked": "󰖂",       // Was 󱥸. Set to 'VPN connected' icon based on your report.
-        "format-vpn": "",          // Was 󰖂. Set to 'ethernet' icon.
+        "format-ethernet": "󱥸", // Was . Set to 'loading' icon based on your report.
+        "format-linked": "󰖂", // Was 󱥸. Set to 'VPN connected' icon based on your report.
+        "format-vpn": "", // Was 󰖂. Set to 'ethernet' icon.
         "format-disconnected": "󰖪",
-        "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+        "format-icons": [
+            "󰤯",
+            "󰤟",
+            "󰤢",
+            "󰤥",
+            "󰤨"
+        ],
         "tooltip-format": "{ifname}: {ipaddr}/{cidr}\n{essid} ({signalStrength}%)\n⬆ {bandwidthUpBytes} ⬇ {bandwidthDownBytes}",
         "on-click": "alacritty -e nmtui"
     },
-    
     // --- Audio ---
     "pulseaudio": {
         "format": " {volume}%",
@@ -153,21 +160,22 @@
             "hands-free": "󱡏",
             "headset": "󰋎",
             "default": ["", "", ""]
+            
         },
         "on-click": "pavucontrol",
         "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
-        "scroll-step": 5
+        "on-scroll-up": "~/.config/hypr/scripts/scroll_volume.sh up",
+        "on-scroll-down": "~/.config/hypr/scripts/scroll_volume.sh down",
+        "scroll-step": 1
     },
-// --- Color Picker ---
+    // --- Color Picker ---
     "custom/picker": {
         "format": "󰃉",
-        "tooltip": true, 
+        "tooltip": true,
         "tooltip-format": "Color picker",
         "on-click": "~/.config/hypr/scripts/picker.sh"
     },
-
-
-// --- Power profile ---
+    // --- Power profile ---
     "custom/powerpfp": {
         "format": "{text}",
         "tooltip": true,
@@ -176,18 +184,25 @@
         "interval": 5,
         "on-click": "~/.config/hypr/scripts/power-profile.sh cycle"
     },
+    // --- Night Light ---
+    "custom/nightlight": {
+        "format": "󰖔",
+        "tooltip": true,
+        "tooltip-format": "Night Light",
+        "on-click": "~/.config/hypr/scripts/nightlight_control.sh",
+        "on-scroll-up": "~/.config/hypr/scripts/nightlight_control.sh increase",
+        "on-scroll-down": "~/.config/hypr/scripts/nightlight_control.sh decrease"
+    },
+    // --- Brightness ---
+    "custom/brightness": {
+        "format": "󱞖", 
+        "return-type": "json",
+        "exec": "~/.config/hypr/scripts/brightness_waybar.sh",
+        "interval": 1,
+        "tooltip": true,
+        "on-click": "~/.config/hypr/scripts/brightness_waybar.sh",
+        "on-scroll-up": "~/.config/hypr/scripts/brightness_waybar.sh up",
+        "on-scroll-down": "~/.config/hypr/scripts/brightness_waybar.sh down"
 
-// // --- Night light ---
-// "custom/nightlight": {
-//         "format": "󰖔",
-//         "tooltip": true,
-//         "return-type" :"json",
-//         // Runs every 3s to get the status
-//         "exec": "~/.config/hypr/scripts/toggle_nightlight.sh get",
-//         "interval": 3,
-//         // --- actions ---
-//         "on-click": "~/.config/hypr/scripts/toggle_nightlight.sh",
-       
-// }
-
-}    
+    }
+}

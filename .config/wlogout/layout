@@ -1,37 +1,27 @@
-
-  {
+{
     "label": "lock",
-    "action": "swaylock --color 282a36 --screenshots --effect-blur 21x11 --clock --indicator --indicator-radius 100 --indicator-thickness 7 --ring-color bd93f9 --key-hl-color e06c75",
+    "action": "hyprlock",
     "text": "",
     "keybind": "l"
-  },
-  {
+}
+
+{
     "label": "logout",
     "action": "hyprctl dispatch exit",
     "text": "",
     "keybind": "e"
-  },
-  {
+}
+
+{
     "label": "reboot",
     "action": "systemctl reboot",
     "text": "",
     "keybind": "r"
-  },
-  {
+}
+
+{
     "label": "shutdown",
     "action": "systemctl poweroff",
     "text": "",
     "keybind": "s"
-  },
-  {
-    "label": "hibernate",
-    "action": "systemctl hybrid-sleep",
-    "text": "",
-    "keybind": "h"
-  },
-  {
-    "label": "suspend",
-    "action": "systemctl suspend",
-    "text": "",
-    "keybind": "u"
-  }
+}

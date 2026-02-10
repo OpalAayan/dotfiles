@@ -1,0 +1,127 @@
+configuration {
+    modi: "window";
+    show-icons: true;
+    icon-theme: "Tela-circle-dracula";
+    
+    /* --- FLUID SWITCHER KEYBINDINGS --- */
+    
+    /* 1. Unbind standard Tab behavior (prevents conflict) */
+    kb-mode-next: "";
+    kb-mode-previous: "";
+    kb-element-next: "";
+    kb-element-prev: "";
+
+    /* 2. Bind Tab to cycle windows while holding Alt */
+    kb-row-down: "Alt+Tab,Tab";
+    kb-row-up: "Alt+Shift+Tab,Shift+Tab";
+
+    /* 3. Bind Alt Release to Accept (The "Fluid" part) */
+    /* !Alt_L means "On release of Left Alt" */
+    kb-accept-entry: "!Alt_L,!Alt_R,Return"; 
+}
+
+* {
+    font: "JetBrainsMono Nerd Font Bold 11";
+    
+    /* Palette */
+    bg-col:      rgba(30, 30, 46, 0.85); 
+    bg-col-light:rgba(49, 50, 68, 0.85); 
+    border-col:  #1e1e2e;
+    selected-col:#cba6f7; 
+    fg-col:      #cdd6f4; 
+    fg-col-muted:#6c7086; 
+}
+
+window {
+    transparency: "real";
+    location: center;
+    anchor: center;
+    fullscreen: false;
+    
+    /* Dynamic width is handled by the script, this is a fallback */
+    width: 800px; 
+    height: 230px; 
+    
+    enabled: true;
+    margin: 0;
+    padding: 0;
+    border: 0px;
+    border-radius: 12px; 
+    border-color: @border-col;
+    background-color: transparent;
+    cursor: "default";
+}
+
+mainbox {
+    enabled: true;
+    spacing: 0px;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    children: [ "listview" ];
+}
+
+listview {
+    enabled: true;
+    /* Dynamic columns handled by script */
+    columns: 3; 
+    lines: 1; 
+    cycle: true;
+    dynamic: true;
+    scrollbar: false;
+    layout: vertical;
+    reverse: false;
+    fixed-height: true;
+    fixed-columns: true;
+    
+    spacing: 15px; 
+    margin: 20px;
+    background-color: transparent;
+    cursor: "default";
+}
+
+element {
+    enabled: true;
+    spacing: 0px;
+    margin: 0;
+    padding: 20px 5px;
+    border: 0px;
+    border-radius: 12px; 
+    border-color: transparent;
+    background-color: @bg-col;
+    text-color: @fg-col-muted;
+    orientation: vertical;
+    cursor: "pointer";
+}
+
+element normal.normal {
+    background-color: @bg-col;
+    text-color: @fg-col-muted;
+}
+
+element selected.normal {
+    background-color: @bg-col-light;
+    border: 2px; 
+    border-color: @selected-col;
+    text-color: @fg-col;
+}
+
+element-icon {
+    background-color: transparent;
+    text-color: inherit;
+    size: 72px; 
+    cursor: inherit;
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    highlight: inherit;
+    cursor: inherit;
+    
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+    margin: 10px 0 0 0; 
+}

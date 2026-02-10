@@ -113,16 +113,18 @@
 # 1. System Overlay (Volume/Brightness)
 # Matches standard overlay tools (like swayosd or custom scripts)
 [volume_brightness]
-    appname = "volume_overlay"
-    summary = "*"
+    appname = volume_overlay
     format = "<b>%s</b>"
+    background = "#282a36ea"
+    foreground = "#f8f8f2"
     frame_color = "#bd93f9"
+    highlight = "#bd93f9"
     history_ignore = yes
     timeout = 2
 
 # 2. Night Light / Gamma
 [nightlight]
-    appname = "nightlight_overlay"
+    appname = nightlight_overlay
     format = "<b>%s</b>"
     frame_color = "#ffb86c" # Dracula Orange
     history_ignore = yes
@@ -130,7 +132,7 @@
 
 # 3. Screenshot Tools (Flameshot, etc)
 [screenshots]
-    appname = "flameshot"
+    appname = flameshot
     format = "<b>%s</b>\n%b"
     frame_color = "#50fa7b" # Dracula Green
     timeout = 5
@@ -152,5 +154,5 @@
 
 # 6. Clean up Notify-Send
 [notify-send]
-    appname = "notify-send"
+    appname = notify-send
     format = "<span size='large' color='#ff79c9'><b>%s</b></span>\n%b"

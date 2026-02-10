@@ -75,6 +75,8 @@ alias bluej="~/.local/lib/bluej/bluej"                   # Manual BlueJ
 alias rmpc="~/.config/hypr/scripts/rmpc_music.sh"        # RMPC Music
 alias cmus='(cd ~/Music && command cmus)'                # CMUS music dir
 alias bt-battery="bluetoothctl info E3:5F:23:22:BF:DD | grep 'Battery Percentage'"
+alias flappy='(cd "/home/aayanopal/Documents/JAVA CODES/1Real devCooking/FlappyBirdxd" && javac FlappyApp.java && java FlappyApp &> /dev/null) && echo "fuck you" | lolcat'
+
 
 # ==============================================================================
 # FUNCTIONS
@@ -124,3 +126,20 @@ bindkey '^[^J' magic-enter
 
 # Hide secondary prompt for cleaner multiline look
 PROMPT2=' '
+
+# ==============================================================================
+# GPU COMPATIBILITY FIXES
+# ==============================================================================
+# Gaslight Ghostty into thinking we have OpenGL 4.6 (Fixes Intel HD 4000 crash)
+export MESA_GL_VERSION_OVERRIDE=4.6
+export MESA_GLSL_VERSION_OVERRIDE=460
+
+# ==============================================================================
+# NIX SUPPORT
+# ==============================================================================
+if [ -e /etc/profile.d/nix.sh ]; then
+  source /etc/profile.d/nix.sh
+fi
+
+
+export PATH="$HOME/.nix-profile/bin:$PATH"

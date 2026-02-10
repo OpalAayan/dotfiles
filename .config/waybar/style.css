@@ -14,19 +14,23 @@
 
 window#waybar {
     background: transparent;
-    color: #cdd6f4; /* Catppuccin Text */
+    color: #cdd6f4;
+    /* Catppuccin Text */
 }
 
 /* Island containers */
 .modules-left,
 .modules-center,
 .modules-right {
-    background-color: rgba(40, 42, 54, 0.9); /* Dracula Background */
-    border: 1px solid rgba(180, 190, 254, 0.5); /* Catppuccin Lavender */
+    background-color: rgba(40, 42, 54, 0.9);
+    /* Dracula Background */
+    border: 1px solid rgba(180, 190, 254, 0.5);
+    /* Catppuccin Lavender */
     margin: 3px 6px;
     padding: 1px 10px;
     border-radius: 20px;
-    box-shadow: 0px 0px 5px rgb(255, 255, 255); /* Softer White Glow */
+    box-shadow: 0px 0px 5px rgb(255, 255, 255);
+    /* Softer White Glow */
 }
 
 /* Center Island Modules */
@@ -56,21 +60,26 @@ window#waybar {
 #custom-picker,
 #custom-powerpfp,
 #custom-nightlight,
-#custom-newday{ 
+#custom-brightness,
+#custom-newday {
     padding: 0 8px;
     background: transparent;
 }
 
 /* Clock and Date modules */
- #custom-dynamic_clock {
-    /*color: #94e2d5;*/ /* Catppuccin Teal */  /* white is better*/
+#custom-dynamic_clock {
+    /*font-family: "Sleek Clock Final", "JetBrainsMono Nerd Font";*/
+    /*font-size: 20px;*/
+    /*color:  #94e2d5;*/
     margin-left: 6px;
     padding: 0;
     background: transparent;
 }
 
 #clock-date {
-    /*color: #94e2d5;*/ /* Catppuccin Teal */  /* white is better*/
+    /*color: #94e2d5;*/
+    /* Catppuccin Teal */
+    /* white is better*/
     margin-left: 6px;
     padding: 0;
     background: transparent;
@@ -79,48 +88,58 @@ window#waybar {
 
 /* --- New Day Alert --- */
 #custom-newday {
-    background-color: #b4befe;  /* Lavender background */
-    color: #1e1e2e;             /* Dark text for contrast */
+    background-color: #b4befe;
+    /* Lavender background */
+    color: #1e1e2e;
+    /* Dark text for contrast */
     border-radius: 12px;
     padding: 0 10px;
-    margin-right: 5px;          /* Space between alert and date */
+    margin-right: 5px;
+    /* Space between alert and date */
     font-weight: bold;
 }
 
 /* Reusing your existing blink animation for the flash effect */
 #custom-newday.alert {
-    animation: blink 0.5s linear infinite; 
-    box-shadow: 0 0 10px rgba(180, 190, 254, 0.8); /* Glow effect */
+    animation: blink 0.5s linear infinite;
+    box-shadow: 0 0 10px rgba(180, 190, 254, 0.8);
+    /* Glow effect */
 }
 
 /* Disk module */
 #disk {
-    color: #f9e2af; /* Catppuccin Yellow */
+    color: #f9e2af;
+    /* Catppuccin Yellow */
 }
 
 /* Memory module */
 #memory {
-    color: #a6e3a1; /* Catppuccin Green */
+    color: #a6e3a1;
+    /* Catppuccin Green */
 }
 
 #memory.critical {
-    color: #f38ba8; /* Catppuccin Red */
+    color: #f38ba8;
+    /* Catppuccin Red */
     animation: blink 0.7s linear infinite;
 }
 
 /* Temperature module */
 #temperature {
-    color: #89dceb; /* Catppuccin Sky */
+    color: #89dceb;
+    /* Catppuccin Sky */
 }
 
 #temperature.critical {
-    color: #f38ba8; /* Catppuccin Red */
+    color: #f38ba8;
+    /* Catppuccin Red */
     animation: pulse 1s ease-in-out infinite;
 }
 
 /* CPU module */
 #cpu {
-    color: #cba6f7; /* Catppuccin Mauve */
+    color: #cba6f7;
+    /* Catppuccin Mauve */
 }
 
 /* Workspace styling */
@@ -132,43 +151,52 @@ window#waybar {
     padding: 0 7px;
     margin: 0 3px;
     background: transparent;
-    color: #9399b2; /* Catppuccin Overlay2 */
+    color: #9399b2;
+    /* Catppuccin Overlay2 */
     border-radius: 10px;
     transition: all 0.3s;
 }
 
 #workspaces button:hover {
-    background-color: rgba(69, 71, 90, 0.4); /* Catppuccin Surface0 */
-    color: #b4befe; /* Catppuccin Lavender */
+    background-color: rgba(69, 71, 90, 0.4);
+    /* Catppuccin Surface0 */
+    color: #b4befe;
+    /* Catppuccin Lavender */
     box-shadow: none;
 }
 
 #workspaces button.active {
-    background-color: #89b4fa; /* Catppuccin Blue */
-    color: #1e1e2e; /* Catppuccin Base */
+    background-color: #89b4fa;
+    /* Catppuccin Blue */
+    color: #1e1e2e;
+    /* Catppuccin Base */
     box-shadow: 0 0 6px rgba(137, 180, 250, 0.6);
 }
 
 #workspaces button.urgent {
-    background-color: #f38ba8; /* Catppuccin Red */
+    background-color: #f38ba8;
+    /* Catppuccin Red */
     color: #1e1e2e;
     animation: pulse 1s ease-in-out infinite;
 }
 
 /* App Launcher */
 #custom-launcher {
-    color: #89b4fa; /* Catppuccin Blue */
+    color: #89b4fa;
+    /* Catppuccin Blue */
     font-size: 18px;
     padding: 0 10px 0 4px;
 }
 
 #custom-launcher:hover {
-    color: #cba6f7; /* Catppuccin Mauve */
+    color: #cba6f7;
+    /* Catppuccin Mauve */
 }
 
 /* Color Picker */
 #custom-picker {
-    color: #e59bd2; /* Catppuccin Pink */
+    color: #e59bd2;
+    /* Catppuccin Pink */
     font-size: 16px;
 }
 
@@ -182,120 +210,198 @@ window#waybar {
 }
 
 #custom-powerpfp.power-saver {
-    color: #a6e3a1; /* Catppuccin Green */
+    color: #a6e3a1;
+    /* Catppuccin Green */
 }
 
 #custom-powerpfp.balanced {
-    color: #ffcc5e; /* Fuckputin Yellow */
+    color: #ffcc5e;
+    /* Fuckputin Yellow */
 }
 
 #custom-powerpfp.performance {
-    color: #f38ba8; /* Catppuccin Red */
+    color: #f38ba8;
+    /* Catppuccin Red */
 }
 
-/* Power Menu Button */
 #custom-power {
-    background-color: #ff2160; /* Catppuccin Red */
-    color: #1e1e2e; /* Catppuccin Base */
+    background-color: #ff2160;
+    color: #1e1e2e;
     font-size: 15px;
-    border-radius: 50px;
-    padding: 0 10px;
-    margin: 4px 6px 4px 10px;
-    box-shadow: 0 0 8px rgba(243, 139, 168, 0.5);
+    border-radius: 150px;
+
+    /* BREAKING THE PADDING SHORTHAND */
+    /* Adjust these specific numbers to nudge the icon */
+    padding-left: 10px;
+    /* Tweak this to move icon Left/Right */
+    padding-right: 12px;
+    /* Often icon fonts need 1-2px extra on the right */
+    padding-top: 0px;
+    /* Tweak this to move icon Up/Down */
+    padding-bottom: 1px;
+    /* Sometimes 1px here lifts the icon visually */
+
+    margin: 4px 6px 4px 4px;
+    box-shadow: 0 0 0px rgba(243, 139, 168, 0.5);
 }
 
 #custom-power:hover {
-    background-color: #f5c2e7; /* Catppuccin Pink */
+    background-color: #f5c2e7;
     box-shadow: 0 0 12px rgba(243, 139, 168, 0.7);
 }
 
-/* Night Light */
- /* #custom-nightlight {
-    color: #9399b2; 
-    font-size: 16px;
-}  */
 
-#custom-nightlight.active {
-    color: #fab387; /* Catppuccin Peach (on) */
+
+/* Night Light */
+#custom-nightlight {
+    color: #cba6f7;
+    /* Catppuccin Mauve (Purple) */
+    font-size: 16px;
+    padding: 0 6px;
 }
 
-/* Network module */
+#custom-nightlight:hover {
+    color: #fab387;
+    /* Catppuccin Peach */
+}
+
+/* Brightness */
+#custom-brightness {
+   color: #f9e2af; /* Catppuccin Yellow - Like a soft sun */
+    font-size: 16px;
+    padding: 0 6px;
+}
+
+#custom-brightness:hover {
+  color: #f5c2e7; /* Catppuccin Pink - Super sweet hover effect */
+}
+
+/* -----------------------------------------------------
+ * Right Modules Group: Network, Bluetooth, Audio, Battery
+ * ----------------------------------------------------- */
+
+/* Shared spacing - TIGHTER NOW */
+#network,
+#bluetooth,
+#pulseaudio,
+#battery {
+    padding: 0 6px;
+    /* Reduced from 12px to 6px */
+    margin: 0;
+    /* Removed background/shadow hover effects to fix "boxy" look */
+}
+
+/* --- Network --- */
 #network {
-    color: #94e2d5; /* Catppuccin Teal */
+    color: #94e2d5;
+    /* Catppuccin Teal */
 }
 
 #network.disconnected {
-    color: #f38ba8; /* Catppuccin Red */
+    color: #f38ba8;
+    /* Catppuccin Red */
 }
 
-/* Bluetooth module */
+/* --- Bluetooth --- */
 #bluetooth {
-    color: #89b4fa; /* Catppuccin Blue */
+    color: #89b4fa;
+    /* Catppuccin Blue */
 }
 
 #bluetooth.disabled,
 #bluetooth.off {
-    color: #6c7086; /* Catppuccin Subtext0 */
+    color: #6c7086;
+    /* Catppuccin Subtext0 */
 }
 
-/* Audio module */
+/* --- Audio --- */
 #pulseaudio {
-    color: #fab387; /* Catppuccin Peach */
+    color: #fab387;
+    /* Catppuccin Peach */
+    /* If you want the power button closer to audio, 
+       add a negative margin to the right of audio */
+    margin-right: -2px;
 }
 
 #pulseaudio.muted {
-    color: #6c7086; /* Catppuccin Subtext0 */
+    color: #6c7086;
+    /* Catppuccin Subtext0 */
 }
 
-/* Battery module */
+/* --- Battery --- */
 #battery {
-    color: #a6e3a1; /* Catppuccin Green */
+    color: #a6e3a1;
+    /* Catppuccin Green */
+}
+
+/* Kept the charging animation (it's cool), but removed the boxy pulse */
+#battery.charging,
+#battery.plugged {
+    color: #94e2d5;
+    animation: blink 2s ease-in-out infinite;
+    /* Simple blink instead of pulse */
 }
 
 #battery.warning {
-    color: #f9e2af; /* Catppuccin Yellow */
+    color: #f9e2af;
+    /* Catppuccin Yellow */
 }
 
 #battery.critical {
-    color: #f38ba8; /* Catppuccin Red */
+    color: #f38ba8;
+    /* Catppuccin Red */
     animation: blink 0.7s linear infinite;
 }
 
-/* Animations */
+/* -----------------------------------------------------
+ * Animations
+ * ----------------------------------------------------- */
 @keyframes blink {
     to {
-        background-color: rgba(243, 139, 168, 0.5);
-        color: #f38ba8;
+        background-color: transparent;
+        /* Removed bg to avoid boxiness */
+        opacity: 0.5;
     }
 }
 
-@keyframes pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(243, 139, 168, 0.7);
-    }
-    70% {
-        box-shadow: 0 0 0 10px rgba(243, 139, 168, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(243, 139, 168, 0);
-    }
-}
-
-/* Tooltips */
+/* -----------------------------------------------------
+ * Tooltips
+ * ----------------------------------------------------- */
 tooltip {
-    background-color: rgba(40, 42, 54, 0.95); /* Dracula Background */
-    border: 2px solid #b4befe; /* Catppuccin Lavender */
+    background-color: rgba(40, 42, 54, 0.95);
+    /* Dracula Background */
+    border: 2px solid #b4befe;
+    /* Catppuccin Lavender */
     border-radius: 12px;
-    padding: 8px;
-    color: #cdd6f4;
+    padding: 0;
+    margin: 0;
 }
 
 tooltip label {
     color: #cdd6f4;
-    padding: 4px;
+    padding: 5px 10px;
+    margin: 0;
+    background: transparent;
+    background-color: transparent;
+    background-image: none;
+    text-shadow: none;
+    border: none;
+    box-shadow: none;
 }
-/* This targets ONLY the clock/calendar tooltip */
+
+tooltip box,
+tooltip * {
+    background: transparent;
+    background-color: transparent;
+    background-image: none;
+    border: none;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Clock/Date specific override */
 #clock-date tooltip {
-    background-color: #1e1e2e; 
+    background-color: #1e1e2e;
     border: 2px solid #fab387;
 }

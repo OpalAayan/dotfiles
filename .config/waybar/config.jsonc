@@ -1,5 +1,7 @@
 {
-    "include": ["~/.config/waybar/modules.json"],
+    "include": [
+        "~/.config/waybar/modules.json"
+    ],
     // -------------------------------------------------------------------------
     // Global Configuration
     // -------------------------------------------------------------------------
@@ -7,7 +9,6 @@
     "position": "top",
     "height": 32,
     "spacing": 4,
-    
     // -------------------------------------------------------------------------
     // Module Placement (with new modules)
     // -------------------------------------------------------------------------
@@ -17,7 +18,6 @@
         "memory",
         "cpu",
         "temperature"
-         
     ],
     "modules-center": [
         "custom/picker",
@@ -26,14 +26,13 @@
         "custom/dynamic_clock",
         //"clock#time",
         "custom/powerpfp"
-        
-        
     ],
     "modules-right": [
         "hyprland/workspaces",
+        "custom/nightlight",
+        "custom/brightness",
         "network",
         "bluetooth",
-        //"custom/nightlight",
         "pulseaudio",
         "battery",
         "custom/power"
